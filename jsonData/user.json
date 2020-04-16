@@ -1,0 +1,31 @@
+[{ 
+    "id": 1,
+    "name": "Erik",
+    "email": "erik@injoy.com",
+    "password": "password",
+    "current_prompt": "Do a jigsaw puzzle"
+},{ 
+    "id": 2,
+    "name": "Melissa",
+    "email": "melissa@injoy.com",
+    "password": "password",
+    "current_prompt": "Learn a new recipe"
+},{ 
+    "id": 3,
+    "name": "Signe",
+    "email": "signe@injoy.com",
+    "password": "password",
+    "current_prompt": "Watch the sunset or the sunrise"
+},{ 
+    "id": 4,
+    "name": "Jay",
+    "email": "jay@injoy.com",
+    "password": "password",
+    "current_prompt": "Write a song"
+},{ 
+    "id": 5,
+    "name": "Obama",
+    "email": "obama@injoy.com",
+    "password": "password",
+    "current_prompt": "Make tie dye shirts"
+}]
