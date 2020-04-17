@@ -8,7 +8,7 @@ import Onboard from './pages/Onboard';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-
+import NewPost from './pages/NewPost';
 
 export default function Content(props) {
     return (
@@ -20,6 +20,7 @@ export default function Content(props) {
                 <Route path="/prompts" render={() => <Prompts user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/profile" render={() => <Profile user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/feed" render={() => <Feed user={props.user} updateUser={props.updateUser}  /> } />
+                <Route path="/new/:id" render={() => <NewPost user={props.user} updateUser={props.updateUser}  /> } />
             </Switch>
         </div>
     )

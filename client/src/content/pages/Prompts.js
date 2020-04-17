@@ -1,28 +1,37 @@
 import React, {useState, useEffect} from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Prompts(props) {
-    const [prompts, setPrompts] = useState([]);
+    const [prompt, setPrompt] = useState("");
+
+    const getData = () => {
+        axios.get(`http://www.boredapi.com/api/activity/`)
+        .then(response => {
+            console.log("DAT DATA", response.data)
+            setPrompt([response.data.activity]);
+        }).catch(err=>{console.log(err)})
+    }
 
     useEffect(() => {
-        // for (let i=0; i < 5; i++){
-            axios.get(`http://www.boredapi.com/api/activity/`)
-            .then(response => {
-                console.log("DAT DATA", response.data)
-        //         if (!prompts.includes(response.data.activity)) {
-                    setPrompts([response.data.activity]);
-        //         } else {
-        //             setPrompts(["yo", "yo", "yo", "yo", "yo"]);
-        //         }
-            }).catch(err=>{console.log(err)})
-        // }
+        getData();
     }, [])
 
-    let promptsList = (prompts.length < 1) ? "" : prompts.map(prompt => {
-        return <div>{prompt}</div>
-    })
+    const selectPrompt = () => {
+        // set the current user's current prompt
+    }
+
     
     return (
-        <div>Here be a list of prompts: {promptsList}</div>
+        <div>
+            <h2>
+                {prompt}
+            </h2>
+            <h3>Does this spark joy?</h3>
+            <div>
+                <Link to={`/new/${prompt}`} onClick={selectPrompt}>Yes</Link>
+                <button onClick={getData}>No</button>
+            </div>
+        </div>
     )
 }
