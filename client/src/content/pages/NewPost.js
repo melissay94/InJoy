@@ -1,6 +1,6 @@
 // Packages
 import React, { useState, useEffect } from 'react'
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
@@ -39,16 +39,20 @@ export default function NewPost({user, setUser}){
   }
 
   return (
-    <Slide direction="up" mountOnEnter unmountOnExit in="true">
+    <Slide direction="up" mountOnEnter unmountOnExit in={true}>
     <div>
       <h2 className="fancy">Create a Post</h2>
       <h3>Prompt: {id}</h3>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
-            <TextField label="Title" type="text" name="title" onChange={handleInputChange} value={inputs.title} />
-            <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
-            <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} />
-          <Button type="submit">Submit</Button>
+          <TextField label="Title" type="text" name="title" onChange={handleInputChange} value={inputs.title} />
+          <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
+          <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} />
+          <Button type="submit">
+            <Link to="/feed">
+              Submit
+            </Link>
+          </Button>
         </form>
     </div>
     </Slide>

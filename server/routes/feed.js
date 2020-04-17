@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
     return;
   }
 
-  res.send(feeed);
+  res.send(feed);
 });
 
 module.exports = router;
