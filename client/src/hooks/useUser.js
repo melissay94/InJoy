@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useAddUser = (callback) => {
+const useUser = (callback) => {
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -24,4 +24,4 @@ const useAddUser = (callback) => {
   }
 }
 
-export default useAddUser;
+export default useUser;

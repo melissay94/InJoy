@@ -1,24 +1,31 @@
 // Packages
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Redirect, Link } from 'react-router-dom';
+import axios from 'axios';
+import useUser from '../../hooks/useUser';
 
-const Login = props => {
-  // Declare and initialize state variables
-  let [email, setEmail] = useState('')
-  let [message, setMessage] = useState('')
-  let [password, setPassword] = useState('')
+export default function Login ({user, setCurrentUser}) {
 
-  useEffect(() => {
-    setMessage('')
-  }, [email, password]);
-
-  // Event handlers
-  const handleSubmit = e => {
-    e.preventDefault();
-    // props.setUser(whatever the user is)
+  const sendUser = () => {
+    axios.post("http://localhost:4000/user/login", {email: inputs.email, password: inputs.password })
+      .then(response => {
+        if (response.data.message) {
+          setMessage(response.data.message);
+        } else {
+          setMessage(null);
+          setCurrentUser(response.data);
+        }
+      }).catch(err => {
+        setMessage("Error, something has gone wrong creating a user!");
+        console.log(err);
+      });
   }
+
+  const { handleInputChange, handleSubmit, inputs } = useUser(sendUser);
+  // Declare and initialize state variables
+  let [message, setMessage] = useState('');
   
-  if (props.user) {
+  if (user) {
     return <Redirect to='/prompts' />
   }
 
@@ -29,11 +36,11 @@ const Login = props => {
       <form onSubmit={handleSubmit}>
           <div>
             <label>Email:</label>
-            <input type="email" name="email" onChange={e => setEmail(e.target.value)} />
+            <input type="email" name="email" onChange={handleInputChange} value={inputs.email} />
           </div>
           <div>
             <label>Password:</label>
-            <input type="password" name="password" onChange={e => setPassword(e.target.value)} />
+            <input type="password" name="password" onChange={handleInputChange} value={inputs.password} />
           </div>
           <button type="submit">Sign in</button>
         </form>
@@ -43,5 +50,3 @@ const Login = props => {
     </div>
   )
 }
-
-export default Login

@@ -1,13 +1,13 @@
 // Packages
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import useAddUser from '../../hooks/useAddUser';
+import useUser from '../../hooks/useUser';
 import axios from 'axios';
 
-export default function Signup({currentUser, setCurrentUser}) {
+export default function Signup({user, setCurrentUser}) {
 
   const sendNewUser = () => {
-    axios.post("http://localhost:4000/user/", inputs)
+    axios.post("http://localhost:4000/user/signup", inputs)
       .then(response => {
         if (response.data.message) {
           setMessage(response.data.message);
@@ -22,11 +22,11 @@ export default function Signup({currentUser, setCurrentUser}) {
   }
 
   // Destructure hook here
-  const { handleInputChange, handleSubmit, inputs } = useAddUser(sendNewUser);
+  const { handleInputChange, handleSubmit, inputs } = useUser(sendNewUser);
   // Declare and initialize state variables
   let [message, setMessage] = useState(null);
 
-  if (currentUser) {
+  if (user) {
     return (<Redirect to="/profile" />);
   }
 
@@ -52,4 +52,3 @@ export default function Signup({currentUser, setCurrentUser}) {
     </div>
   )
 }
-

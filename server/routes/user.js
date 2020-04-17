@@ -6,7 +6,7 @@ const userFilePath = "./jsonData/user.json";
 const router = express.Router();
 
 // Get current user
-router.get("/", (req, res) => {
+router.post("/login", (req, res) => {
   const allUsers = JSON.parse(fs.readFileSync(userFilePath));
   const userEmail = req.body.email;
   const userPassword = req.body.password;
@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 // Create a user
-router.post("/", (req, res) => {
+router.post("/signup", (req, res) => {
   const allUsers = JSON.parse(fs.readFileSync(userFilePath));
 
   const userName = req.body.name;
