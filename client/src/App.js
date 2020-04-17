@@ -6,14 +6,14 @@ import Header from './wrappers/Header';
 import Content from './content/Content';
 
 function App() {
-  const [user, updateUser] = useState(null);
+  // const [user, updateUser] = useState(null);
 
-  // let [user, updateUser] = useState({
-  //   id: 1,
-  //   name: "Erik",
-  //   email: "erik@test.com",
-  //   password: "password"
-  // })
+  let [user, updateUser] = useState({
+    id: 1,
+    name: "Erik",
+    email: "erik@test.com",
+    password: "password"
+  })
 
   return (
    <Router>

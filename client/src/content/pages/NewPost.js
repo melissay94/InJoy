@@ -25,7 +25,7 @@ const NewPost = props => {
   return (
     <Slide direction="up" mountOnEnter unmountOnExit in="true">
     <div>
-      <h2 className="fancy">New Post</h2>
+      <h2 className="fancy">Create a Post</h2>
       <h3>Prompt: {id}</h3>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>

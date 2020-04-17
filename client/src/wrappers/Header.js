@@ -6,14 +6,14 @@ export default function Header(props) {
 
     let links = props.user?
         (<ul>
-            <li><Link to='/profile'>Profile</Link></li>
-            <li><Link to='/prompts'>Choose a Prompt</Link></li>
+            <li><Link to='/profile' className="App-link">Profile</Link></li>
+            <li><Link to='/prompts' className="App-link">Choose a Prompt</Link></li>
         </ul>)
         :"";
 
     return (
         <header>
-            <h1><Link to='/'>InJoy</Link></h1>
+            <h1 className="fancy"><Link className="App-link" to='/'>InJoy</Link></h1>
             <nav>
                 {links}
             </nav>
