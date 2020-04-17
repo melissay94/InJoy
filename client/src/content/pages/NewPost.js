@@ -24,7 +24,7 @@ export default function NewPost({user, setUser}){
         setUser(response.data);
       }
     }).catch(err => {
-      setMessage("Error, something has gone wrong creating a user!");
+      setMessage("Error, something has gone wrong adding your post!");
       console.log(err);
     });
   }
