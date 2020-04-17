@@ -13,7 +13,7 @@ router.post("/login", (req, res) => {
   const userEmail = req.body.email;
   const userPassword = req.body.password;
 
-  const currentUser = allUsers.filter(user => {
+  const currentUser = allUsers.find(user => {
     return (user.email === userEmail && user.password === userPassword);
   });
 
@@ -38,11 +38,11 @@ router.post("/signup", (req, res) => {
     return;
   }
 
-  const existingUser = allUsers.filter(user => {
+  const existingUser = allUsers.find(user => {
     return (user.email === userEmail);
   });
 
-  if (existingUser.length > 0) {
+  if (existingUser) {
     res.send({ message: "Error, user already exists"});
     return;
   }
@@ -71,15 +71,16 @@ router.post("/:id/prompt", (req, res) => {
 
   // Use the id to find the correct user
   const id = req.params.id;
-  allUsers[id].current_prompt = req.body.prompt.title;
+  allUsers[id].current_prompt = req.body.title;
 
   // Check to see if the chosen prompt is already in our json of prompts
-  const currentPrompt = allPrompts.filter(prompt => {
+  const currentPrompt = allPrompts.find(prompt => {
+    console.log(prompt);
     return prompt.title === allUsers[id].current_prompt;
   });
 
   // If it is not in the json, add it to the json for later
-  if (currentPrompt.length < 1) {
+  if (!currentPrompt) {
     const newPrompt = {
       id: allPrompts.length,
       title: allUsers[id].current_prompt,
@@ -88,12 +89,12 @@ router.post("/:id/prompt", (req, res) => {
     }
 
     allPrompts.push(newPrompt);
-    fs.writeFileSync(promptFilePath, allPrompts);
+    fs.writeFileSync(promptFilePath, JSON.stringify(allPrompts));
   }
 
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));
 
-  res.send(currentUser);
+  res.send(allUsers[id]);
 });
 
 // Add a post
@@ -109,13 +110,13 @@ router.post("/:id/post", (req, res) => {
   allUsers[id].posts.push(req.body.post);
 
   // Find the associated prompt the user was completing
-  const currentPrompt = allPrompts.filter(prompt => {
+  const currentPrompt = allPrompts.find(prompt => {
     return allUsers[id].current_prompt === prompt.title;
   });
 
   // If found, push the post to that prompt
-  if (currentPrompt.length > 0) {
-    currentPrompt[0].posts.push(req.body.post);
+  if (currentPrompt) {
+    currentPrompt.posts.push(req.body.post);
   }
 
   // Push the post to the feed list
@@ -126,7 +127,7 @@ router.post("/:id/post", (req, res) => {
   fs.writeFileSync(promptFilePath, JSON.stringify(allPrompts));
   fs.writeFileSync(feedFilePath, JSON.stringify(feed));
 
-  res.send(currentUser);
+  res.send(allUsers[id]);
 });
 
 module.exports = router;
