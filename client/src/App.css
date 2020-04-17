@@ -24,7 +24,14 @@
   color: white;
 }
 .fancy {
+  color: rgb(1, 187, 125);
   font-family: 'Permanent Marker', cursive;
+}
+.fancy a {
+  color: rgb(1, 187, 125);
+}
+.fancy a:visited {
+  color: rgb(1, 187, 125);
 }
 .App-link {
   color: black;
