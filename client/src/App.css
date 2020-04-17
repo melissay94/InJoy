@@ -37,6 +37,12 @@ main {
   flex-direction: column;
   align-content: center;
 }
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 ul {
   list-style: none;
 }
@@ -51,14 +57,15 @@ nav ul {
   justify-content: space-around;
 }
 .splash {
-  height: 100vh;
+  padding: 10px;
+  height: 84vh;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  background: url("https://cdn.pixabay.com/photo/2017/07/03/20/17/abstract-2468874_1280.jpg");
+  background: url("https://i.imgur.com/A1PdwrP.png");
+  /* background: url("https://cdn.pixabay.com/photo/2017/07/03/20/17/abstract-2468874_1280.jpg"); */
   background-size: cover;
-  background-position: center;
 }
 form {
   padding: 20px;
@@ -100,7 +107,14 @@ form {
   background: white;
 }
 .green {
+  text-align: center;
   background: white;
+  padding: 10px;
+  border: 1px solid rgb(1, 187, 125);
+  box-shadow: 10px 10px 12px grey;
+}
+.greener {
+  background: rgb(1, 187, 125);
 }
 prompt-buttons a {
   text-decoration: none;
@@ -123,7 +137,75 @@ prompt-buttons a:hover {
 h1, h2, h3, h4, h5, h6, p {
   margin: 15px 10px 10px 10px;
 }
-
-
-
+.menu-icon {
+  height: 50px;
+  display: block;
+}
+.steps {
+  color: gray;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  margin: 2%;
+}
+.step {
+  width: 100%;
+}
+.middle {
+    border: 1px solid black;
+}
+.highlight {
+  background: rgb(214, 214, 214);
+  color: black;
+}
+.left {
+  border: 1px solid black;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.right {
+  border: 1px solid black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.signup-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.signup-option {
+  margin: 5px;
+  width: 100px;
+  text-align: center;
+}
+.signup-option:active {
+  background-color: yellow;
+}
+.welcome {
+  text-align: center;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: rgba(255,255,255,0.8);
+}
+.allset {
+  text-align: center;
+}
+.allset-img {
+  background-image: url("https://i.imgur.com/if8Ytvc.png");
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.allset-button {
+  width: 200px;
+  text-align: center;
+  align-items: center;
+}
 
