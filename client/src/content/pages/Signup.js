@@ -24,18 +24,18 @@ export default function Signup({user, setUser}) {
 
 
   const sendNewUser = () => {
-    // axios.post("http://localhost:4000/user/signup", inputs)
-    //   .then(response => {
-    //     if (response.data.message) {
-    //       setMessage(response.data.message);
-    //     } else {
-    //       setMessage(null);
-    //       setUser(response.data);
-    //     }
-    //   }).catch(err => {
-    //     setMessage("Error, something has gone wrong creating a user!");
-    //     console.log(err);
-    //   });
+    axios.post("http://localhost:4000/user/signup", inputs)
+      .then(response => {
+        if (response.data.message) {
+          setMessage(response.data.message);
+        } else {
+          setMessage(null);
+          setUser(response.data);
+        }
+      }).catch(err => {
+        setMessage("Error, something has gone wrong creating a user!");
+        console.log(err);
+      });
     setStep("Two");
   }
 
