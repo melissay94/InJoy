@@ -1,6 +1,6 @@
 // Packages
-import React, { useState, useEffect } from 'react'
-import { useParams, Redirect, Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useParams, Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import usePost from '../../hooks/usePost';
 
 export default function NewPost({user, setUser}){
+
+  const [newPost, setNewPost] = useState(null);
 
   const sendPost = () => {
     axios.post(`http://localhost:4000/user/${user.id}/post`, {
@@ -22,6 +24,7 @@ export default function NewPost({user, setUser}){
       } else {
         setMessage(null);
         setUser(response.data);
+        setNewPost(response.data.posts[response.data.posts.length -1]);
       }
     }).catch(err => {
       setMessage("Error, something has gone wrong adding your post!");
@@ -38,6 +41,13 @@ export default function NewPost({user, setUser}){
     return <Redirect to="/" />;
   }
 
+  if (newPost) {
+    return <div>
+      Congrats! You posted!
+      <a href="/feed">Go check out the feed!</a>
+    </div>;
+  }
+
   return (
     <Slide direction="up" mountOnEnter unmountOnExit in={true}>
     <div>
@@ -49,9 +59,9 @@ export default function NewPost({user, setUser}){
           <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
           <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} />
           <Button type="submit">
-            <Link to="/feed">
+            
               Submit
-            </Link>
+            
           </Button>
         </form>
     </div>

@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Get all posts
 router.get("/", (req, res) => {
+  
   const feed = JSON.parse(fs.readFileSync(feedFilePath));
 
   if (!feed || feed.length < 1) {
@@ -15,6 +16,7 @@ router.get("/", (req, res) => {
   }
 
   res.send(feed);
+  return;
 });
 
 module.exports = router;

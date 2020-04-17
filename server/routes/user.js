@@ -18,6 +18,7 @@ router.post("/login", (req, res) => {
   });
 
   res.send(currentUser);
+  return;
 });
 
 // Create a user
@@ -60,6 +61,7 @@ router.post("/signup", (req, res) => {
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));
 
   res.send(newUser);
+  return;
 });
 
 // Update user prompt
@@ -94,6 +96,7 @@ router.post("/:id/prompt", (req, res) => {
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));
 
   res.send(allUsers[id]);
+  return;
 });
 
 // Add a post
@@ -135,6 +138,7 @@ router.post("/:id/post", (req, res) => {
   fs.writeFileSync(feedFilePath, JSON.stringify(feed));
 
   res.send(allUsers[id]);
+  return;
 });
 
 module.exports = router;
