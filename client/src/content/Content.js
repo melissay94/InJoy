@@ -9,15 +9,17 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
+import Landing from './pages/Landing';
 
 export default function Content(props) {
     return (
         <div>
             <Switch>
+                <Route exact path="/" render={() => <Landing user={props.user} updateUser={props.setCurrentUser}  /> } />
                 <Route path="/login" render={() => <Login user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
                 <Route path="/signup" render={() => <Signup user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
-                <Route path="/onboard" render={() => <Onboard user={props.user} updateUser={props.updateUser}  /> } />
-                <Route path="/prompts" render={() => <Prompts user={props.user} updateUser={props.updateUser}  /> } />
+                <Route path="/onboard" render={() => <Onboard user={props.user} updateUser={props.setCurrentUser}  /> } />
+                <Route path="/prompts" render={() => <Prompts user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
                 <Route path="/profile" render={() => <Profile user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/feed" render={() => <Feed user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/new/:id" render={() => <NewPost user={props.user} updateUser={props.updateUser}  /> } />

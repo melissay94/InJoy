@@ -75,7 +75,6 @@ router.post("/:id/prompt", (req, res) => {
 
   // Check to see if the chosen prompt is already in our json of prompts
   const currentPrompt = allPrompts.find(prompt => {
-    console.log(prompt);
     return prompt.title === allUsers[id].current_prompt;
   });
 

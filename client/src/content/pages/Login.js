@@ -2,6 +2,9 @@
 import React, { useState } from 'react'
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Slide from '@material-ui/core/Slide';
 import useUser from '../../hooks/useUser';
 
 export default function Login ({user, setCurrentUser}) {
@@ -30,23 +33,19 @@ export default function Login ({user, setCurrentUser}) {
   }
 
   return (
+    <Slide direction="up" mountOnEnter unmountOnExit in="true">
     <div>
-      <h2 className="fancy">Login</h2>
+      <h2 className="fancy">Sign in</h2>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email:</label>
-            <input type="email" name="email" onChange={handleInputChange} value={inputs.email} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" name="password" onChange={handleInputChange} value={inputs.password} />
-          </div>
-          <button type="submit">Sign in</button>
+            <TextField type="email" name="email" label="Email"onChange={handleInputChange} value={inputs.email} />
+            <TextField type="password" name="password" label="Password" onChange={handleInputChange} value={inputs.password} />
+          <Button type="submit">Sign in</Button>
         </form>
         <p>
             Not a user? <Link to='/signup'>Sign up here</Link>
         </p>
     </div>
+    </Slide>
   )
 }

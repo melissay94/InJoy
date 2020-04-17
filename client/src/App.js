@@ -6,7 +6,6 @@ import Header from './wrappers/Header';
 import Content from './content/Content';
 
 function App() {
-
   const [currentUser, setCurrentUser] = useState(null);
 
   return (

@@ -1,8 +1,11 @@
 // Packages
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import useUser from '../../hooks/useUser';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Slide from '@material-ui/core/Slide';
+import useUser from '../../hooks/useUser';
 
 export default function Signup({user, setCurrentUser}) {
 
@@ -31,24 +34,17 @@ export default function Signup({user, setCurrentUser}) {
   }
 
   return (
-    <div>
-      <h2 className="fancy">Signup</h2>
-      <span className="red">{message}</span>
-      <form onSubmit={handleSubmit}>
+    <Slide direction="up" mountOnEnter unmountOnExit in="true">
         <div>
-          <label>Name:</label>
-          <input type="text" maxLength="11" name="name" onChange={handleInputChange} value={inputs.name} />
+        <h2 className="fancy">Sign up</h2>
+        <span className="red">{message}</span>
+        <form onSubmit={handleSubmit}>
+            <TextField label="Name" type="text"  name="name"onChange={handleInputChange} value={inputs.name} />
+            <TextField label="Email" type="email" name="email" onChange={handleInputChange} value={inputs.email} required />
+            <TextField label="Password" type="password" name="password"  onChange={handleInputChange} value={inputs.password} required />
+            <Button type="submit">Join now!</Button>
+        </form>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" onChange={handleInputChange} value={inputs.email} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password" onChange={handleInputChange} value={inputs.password} required />
-        </div>
-        <button type="submit">Sign Me Up!</button>
-      </form>
-    </div>
+    </Slide>
   )
 }

@@ -10,13 +10,11 @@ export default function Header({user, setCurrentUser}) {
             <li><Link to='/prompts'>Choose a Prompt</Link></li>
             <li><Link to='/' onClick={() => setCurrentUser(null)}>Logout</Link></li>
         </ul>)
-        :(<ul>
-            <li><Link to='/login'>Login</Link></li>
-        </ul>);
+        :"";
 
     return (
         <header>
-            <h1>InJoy</h1>
+            <h1><Link to='/'>InJoy</Link></h1>
             <nav>
                 {links}
             </nav>

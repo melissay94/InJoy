@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import Slide from '@material-ui/core/Slide';
 
 export default function Prompts({user, setCurrentUser}) {
     // To get an initial value to show on the prompt card
     useEffect(() => {
         getData();
     }, []);
+
+    const [prompt, setPrompt] = useState("");
+    const [slide, setSlide] = useState(false);
 
     const getData = () => {
         axios.get(`http://www.boredapi.com/api/activity/`)
@@ -20,7 +24,8 @@ export default function Prompts({user, setCurrentUser}) {
         }).catch(err=>{
             setMessage("Error, unable to fetch prompt");
             console.log(err);
-        })
+        });
+        setSlide(true);
     }
 
     const sendPrompt = () => {
@@ -39,7 +44,6 @@ export default function Prompts({user, setCurrentUser}) {
             });
     }
 
-    const [prompt, setPrompt] = useState("");
     const [message, setMessage] = useState('');
 
     if (!user) {
@@ -47,20 +51,25 @@ export default function Prompts({user, setCurrentUser}) {
     }
   
     return (
-        <div className="prompt slide">
-            <h2>
-                {prompt.activity}
-            </h2>
-            <h3>Does this spark joy?</h3>
-            <div className="prompt-buttons">
-                <div className="button-div green" onClick={() => sendPrompt()}>
-                    <Link to={`/new/${prompt}`}>Yes</Link>
+        <Slide direction="left" mountOnEnter unmountOnExit in={slide}>
+            <div className="prompt slide">
+                <h2>
+                    {prompt.activity}
+                </h2>
+                <h3>Does this spark joy?</h3>
+                <div className="prompt-buttons">
+                    <div className="button-div green" onClick={() => sendPrompt()}>
+                        <Link className="App-link" to={`/new/${prompt.activity}`}>Yes</Link>
+                    </div>
+                    <div className="button-div red" onClick={()=> {
+                        setSlide(false);
+                        getData();
+                    }}>
+                        <a>No</a>
+                    </div>
                 </div>
-                <div className="button-div red" onClick={getData}>
-                    <a>No</a>
-                </div>
+                <div>{message}</div>
             </div>
-            <div className="red">{message}</div>
-        </div>
+        </Slide>
     )
 }
