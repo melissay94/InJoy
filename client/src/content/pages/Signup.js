@@ -129,9 +129,9 @@ export default function Signup({user, setUser}) {
     <h3>You're all set!</h3>
     <div className="allset">
         <div className="allset-img">
-        </div>
-        <div className="button-div allset-button">
-            <Link className="App-link button-div green greener" to='/prompts'>Find out your first topic!</Link>
+            <div className="button-div allset-button">
+                <Link className="App-link button-div green greener" to='/prompts'>Find out your first topic!</Link>
+            </div>
         </div>
     </div>
 </div>)
