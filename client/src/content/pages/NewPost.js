@@ -16,7 +16,7 @@ export default function NewPost({user, setUser}){
       title: inputs.title,
       description: inputs.description,
       link: inputs.link,
-      user: user.email,
+      user: user.name,
       prompt: user.current_prompt
     }).then(response => {
       if (response.data.message) {
