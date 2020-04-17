@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
   }
 
   res.send(promptTitles);
+  return;
 });
 
 // Get random Prompt
@@ -32,24 +33,26 @@ router.get("/random", (req, res) => {
     return;
   }
   res.send(allPrompts[randomInt]);
+  return;
 })
 
-// Get Prompt based on title
+// Get posts based on title
 router.get("/:title", (req, res) => {
   const allPrompts = JSON.parse(fs.readFileSync(promptFilePath));
 
   const title = req.params.title;
 
-  const promptsByTitle = allPrompts.find(prompt => {
+  const promptByTitle = allPrompts.find(prompt => {
     return prompt.title === title;
   });
 
-  if (!promptsByTitle || promptsByTitle.length < 1) {
+  if (!promptByTitle.posts || promptByTitle.posts.length < 1) {
     res.send({ message: "Could not find any prompts for that title at this time." });
     return;
   }
 
-  res.send(promptsByTitle);
+  res.send(promptByTitle.posts);
+  return;
 })
 
 // Create a new Prompt
@@ -77,6 +80,7 @@ router.post("/", (req, res) => {
   fs.writeFileSync(promptFilePath, JSON.stringify(allPrompts));
 
   res.send(newPrompt);
+  return;
 });
 
 module.exports = router;
