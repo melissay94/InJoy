@@ -33,7 +33,7 @@ export default function Login ({user, setUser}) {
   }
 
   return (
-    <Slide direction="up" mountOnEnter unmountOnExit in="true">
+    <Slide direction="up" mountOnEnter unmountOnExit in={true}>
     <div>
       <h2 className="fancy">Sign in</h2>
       <span className="red">{message}</span>

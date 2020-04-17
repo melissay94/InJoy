@@ -55,7 +55,9 @@ export default function Prompts({user, setUser}) {
         } else {
             getRandomUserPrompt();
         }
-        setSlide(true);
+        setTimeout(() => {
+            setSlide(true);
+        }, 500);
     }
 
     const sendPrompt = () => {
