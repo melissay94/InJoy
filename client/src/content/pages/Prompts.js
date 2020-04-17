@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 import Slide from '@material-ui/core/Slide';
 
-export default function Prompts({user, setCurrentUser}) {
+export default function Prompts({user, setUser}) {
     // To get an initial value to show on the prompt card
     useEffect(() => {
         getData();
@@ -36,7 +36,7 @@ export default function Prompts({user, setCurrentUser}) {
                   setMessage(response.data.message);
                 } else {
                   setMessage(null);
-                  setCurrentUser(response.data);
+                  setUser(response.data);
                 }
             }).catch(err => {
                 setMessage("Error, something has gone wrong with adding this prompt to user");

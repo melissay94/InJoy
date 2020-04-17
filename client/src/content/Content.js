@@ -15,14 +15,14 @@ export default function Content(props) {
     return (
         <div>
             <Switch>
-                <Route exact path="/" render={() => <Landing user={props.user} updateUser={props.setCurrentUser}  /> } />
-                <Route path="/login" render={() => <Login user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
-                <Route path="/signup" render={() => <Signup user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
-                <Route path="/onboard" render={() => <Onboard user={props.user} updateUser={props.setCurrentUser}  /> } />
-                <Route path="/prompts" render={() => <Prompts user={props.user} setCurrentUser={props.setCurrentUser}  /> } />
-                <Route path="/profile" render={() => <Profile user={props.user} updateUser={props.updateUser}  /> } />
-                <Route path="/feed" render={() => <Feed user={props.user} updateUser={props.updateUser}  /> } />
-                <Route path="/new/:id" render={() => <NewPost user={props.user} updateUser={props.updateUser}  /> } />
+                <Route exact path="/" render={() => <Landing user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/login" render={() => <Login user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/signup" render={() => <Signup user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/onboard" render={() => <Onboard user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/prompts" render={() => <Prompts user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/profile" render={() => <Profile user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/feed" render={() => <Feed user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/new/:id" render={() => <NewPost user={props.user} setUser={props.setUser}  /> } />
             </Switch>
         </div>
     )

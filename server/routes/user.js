@@ -104,9 +104,17 @@ router.post("/:id/post", (req, res) => {
   let allPrompts = JSON.parse(fs.readFileSync(promptFilePath));
   let feed = JSON.parse(fs.readFileSync(feedFilePath));
 
+  const newPost = {
+    title: req.body.title,
+    description: req.body.description,
+    link: req.body.link || null,
+    user: req.body.user,
+    prompt: req.body.prompt
+  }
+
   // Use id params to find current user
   const id = req.params.id;
-  allUsers[id].posts.push(req.body.post);
+  allUsers[id].posts.push(newPost);
 
   // Find the associated prompt the user was completing
   const currentPrompt = allPrompts.find(prompt => {
@@ -115,11 +123,11 @@ router.post("/:id/post", (req, res) => {
 
   // If found, push the post to that prompt
   if (currentPrompt) {
-    currentPrompt.posts.push(req.body.post);
+    currentPrompt.posts.push(newPost);
   }
 
   // Push the post to the feed list
-  feed.push(post);
+  feed.push(newPost);
 
   // Now write all the json
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));

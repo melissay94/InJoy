@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import useUser from '../../hooks/useUser';
 
-export default function Login ({user, setCurrentUser}) {
+export default function Login ({user, setUser}) {
 
   const sendUser = () => {
     axios.post("http://localhost:4000/user/login", {email: inputs.email, password: inputs.password })
@@ -16,10 +16,10 @@ export default function Login ({user, setCurrentUser}) {
           setMessage(response.data.message);
         } else {
           setMessage(null);
-          setCurrentUser(response.data);
+          setUser(response.data);
         }
       }).catch(err => {
-        setMessage("Error, something has gone wrong creating a user!");
+        setMessage("Error, something has gone wrong logging you in!");
         console.log(err);
       });
   }

@@ -6,14 +6,14 @@ import Header from './wrappers/Header';
 import Content from './content/Content';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
    <Router>
       <div className="wrapper"> 
-        <Header user={currentUser} setCurrentUser={setCurrentUser} />
+        <Header user={user} setUser={setUser} />
         <main>
-          <Content user={currentUser} setCurrentUser={setCurrentUser} />
+          <Content user={user} setUser={setUser} />
         </main>
       </div>
     </Router>

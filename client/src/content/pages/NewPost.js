@@ -1,25 +1,41 @@
 // Packages
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
+import axios from 'axios';
+import usePost from '../../hooks/usePost';
 
-const NewPost = props => {
+export default function NewPost({user, setUser}){
+
+  const sendPost = () => {
+    axios.post(`http://localhost:4000/user/${user.id}/post`, {
+      title: inputs.title,
+      description: inputs.description,
+      link: inputs.link,
+      user: user.email,
+      prompt: user.current_prompt
+    }).then(response => {
+      if (response.data.message) {
+        setMessage(response.data.message);
+      } else {
+        setMessage(null);
+        setUser(response.data);
+      }
+    }).catch(err => {
+      setMessage("Error, something has gone wrong creating a user!");
+      console.log(err);
+    });
+  }
+
   // Declare and initialize state variables
   const { id } = useParams();
-  let [title, setTitle] = useState('')
-  let [message, setMessage] = useState('')
-  let [description, setDescription] = useState('')
+  const { handleInputChange, handleSubmit, inputs } = usePost(sendPost);
+  let [message, setMessage] = useState(null);
 
-  useEffect(() => {
-    setMessage('')
-  }, [title, description]);
-
-  // Event handlers
-  const handleSubmit = e => {
-    e.preventDefault();
-    // update the list of posts
+  if (!user) {
+    return <Redirect to="/" />;
   }
 
   return (
@@ -29,8 +45,9 @@ const NewPost = props => {
       <h3>Prompt: {id}</h3>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
-            <TextField label="Title" type="text" name="title" onChange={e => setTitle(e.target.value)} />
-            <TextField label="What did you do?" multiline type="type" name="description" onChange={e => setDescription(e.target.value)} />
+            <TextField label="Title" type="text" name="title" onChange={handleInputChange} value={inputs.title} />
+            <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
+            <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} />
           <Button type="submit">Submit</Button>
         </form>
     </div>
@@ -38,4 +55,3 @@ const NewPost = props => {
   )
 }
 
-export default NewPost
