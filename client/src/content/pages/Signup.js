@@ -1,25 +1,32 @@
 // Packages
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import useAddUser from '../../hooks/useAddUser';
+import axios from 'axios';
 
-export default function Signup(props) {
-  // Declare and initialize state variables
-  let [email, setEmail] = useState('')
-  let [name, setName] = useState('')
-  let [message, setMessage] = useState('')
-  let [password, setPassword] = useState('')
+export default function Signup({currentUser, setCurrentUser}) {
 
-  useEffect(()=> {
-    setMessage("");
-  }, [email, name, password])
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // add user to json file
-    // props.setUser( whatever the user is)
+  const sendNewUser = () => {
+    axios.post("http://localhost:4000/user/", inputs)
+      .then(response => {
+        if (response.data.message) {
+          setMessage(response.data.message);
+        } else {
+          setMessage(null);
+          setCurrentUser(response.data);
+        }
+      }).catch(err => {
+        setMessage("Error, something has gone wrong creating a user!");
+        console.log(err);
+      });
   }
 
-  if (props.user) {
+  // Destructure hook here
+  const { handleInputChange, handleSubmit, inputs } = useAddUser(sendNewUser);
+  // Declare and initialize state variables
+  let [message, setMessage] = useState(null);
+
+  if (currentUser) {
     return (<Redirect to="/profile" />);
   }
 
@@ -30,15 +37,15 @@ export default function Signup(props) {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
-          <input type="text" maxLength="11" name="name" onChange={e => setName(e.target.value)} />
+          <input type="text" maxLength="11" name="name" onChange={handleInputChange} value={inputs.name} />
         </div>
         <div>
           <label>Email:</label>
-          <input type="email" name="email" onChange={e => setEmail(e.target.value)} />
+          <input type="email" name="email" onChange={handleInputChange} value={inputs.email} required />
         </div>
         <div>
           <label>Password:</label>
-          <input type="password" name="password" onChange={e => setPassword(e.target.value)} />
+          <input type="password" name="password" onChange={handleInputChange} value={inputs.password} required />
         </div>
         <button type="submit">Sign Me Up!</button>
       </form>

@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
-import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
 
 import Header from './wrappers/Header';
 import Content from './content/Content';
 
 function App() {
-  // const [user, updateUser] = useState(null);
 
-  let [user, updateUser] = useState({
-    id: 1,
-    name: "Erik",
-    email: "erik@test.com",
-    password: "password"
-  })
+  const [currentUser, setCurrentUser] = useState(null);
 
   return (
    <Router>
-      <div class="wrapper"> 
-        <Header user={user} />
+      <div className="wrapper"> 
+        <Header user={currentUser} />
         <main>
-          <Content user={user} updateUser={updateUser} />
+          <Content user={currentUser} setCurrentUser={setCurrentUser} />
         </main>
       </div>
     </Router>
