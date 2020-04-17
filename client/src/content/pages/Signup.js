@@ -1,6 +1,10 @@
 // Packages
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Slide from '@material-ui/core/Slide';
+
 
 export default function Signup(props) {
   // Declare and initialize state variables
@@ -24,25 +28,18 @@ export default function Signup(props) {
   }
 
   return (
-    <div>
-      <h2 className="fancy">Signup</h2>
-      <span className="red">{message}</span>
-      <form onSubmit={handleSubmit}>
+    <Slide direction="up" mountOnEnter unmountOnExit in="true">
         <div>
-          <label>Name:</label>
-          <input type="text" maxLength="11" name="name" onChange={e => setName(e.target.value)} />
+        <h2 className="fancy">Sign up</h2>
+        <span className="red">{message}</span>
+        <form onSubmit={handleSubmit}>
+            <TextField label="Name" type="text"  name="name" onChange={e => setName(e.target.value)} />
+            <TextField label="Email" type="email" name="email" onChange={e => setEmail(e.target.value)} />
+            <TextField label="Password" type="password" name="password" onChange={e => setPassword(e.target.value)} />
+            <Button type="submit">Join now!</Button>
+        </form>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" onChange={e => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" name="password" onChange={e => setPassword(e.target.value)} />
-        </div>
-        <button type="submit">Sign Me Up!</button>
-      </form>
-    </div>
+    </Slide>
   )
 }
 

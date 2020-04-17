@@ -9,13 +9,11 @@ export default function Header(props) {
             <li><Link to='/profile'>Profile</Link></li>
             <li><Link to='/prompts'>Choose a Prompt</Link></li>
         </ul>)
-        :(<ul>
-            <li><Link to='/login'>Login</Link></li>
-        </ul>);
+        :"";
 
     return (
         <header>
-            <h1>InJoy</h1>
+            <h1><Link to='/'>InJoy</Link></h1>
             <nav>
                 {links}
             </nav>

@@ -1,6 +1,9 @@
 // Packages
 import React, { useState, useEffect } from 'react'
 import { Redirect, Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Slide from '@material-ui/core/Slide';
 
 const Login = props => {
   // Declare and initialize state variables
@@ -23,24 +26,20 @@ const Login = props => {
   }
 
   return (
+    <Slide direction="up" mountOnEnter unmountOnExit in="true">
     <div>
-      <h2 className="fancy">Login</h2>
+      <h2 className="fancy">Sign in</h2>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email:</label>
-            <input type="email" name="email" onChange={e => setEmail(e.target.value)} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" name="password" onChange={e => setPassword(e.target.value)} />
-          </div>
-          <button type="submit">Sign in</button>
+            <TextField type="email" name="email" label="Email" onChange={e => setEmail(e.target.value)} />
+            <TextField type="password" name="password" label="Password" onChange={e => setPassword(e.target.value)} />
+          <Button type="submit">Sign in</Button>
         </form>
         <p>
             Not a user? <Link to='/signup'>Sign up here</Link>
         </p>
     </div>
+    </Slide>
   )
 }
 

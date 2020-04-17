@@ -9,11 +9,13 @@ import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import NewPost from './pages/NewPost';
+import Landing from './pages/Landing';
 
 export default function Content(props) {
     return (
         <div>
             <Switch>
+                <Route exact path="/" render={() => <Landing user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/login" render={() => <Login user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/signup" render={() => <Signup user={props.user} updateUser={props.updateUser}  /> } />
                 <Route path="/onboard" render={() => <Onboard user={props.user} updateUser={props.updateUser}  /> } />
