@@ -9,7 +9,11 @@ export default function Prompts(props) {
         axios.get(`http://www.boredapi.com/api/activity/`)
         .then(response => {
             console.log("DAT DATA", response.data)
-            setPrompt([response.data.activity]);
+            if (response.data.type == "charity" || response.data.type=="social") {
+                getData();
+            } else {
+                setPrompt([response.data.activity]);
+            }
         }).catch(err=>{console.log(err)})
     }
 
@@ -23,14 +27,18 @@ export default function Prompts(props) {
 
     
     return (
-        <div>
+        <div className="prompt slide">
             <h2>
                 {prompt}
             </h2>
             <h3>Does this spark joy?</h3>
-            <div>
-                <Link to={`/new/${prompt}`} onClick={selectPrompt}>Yes</Link>
-                <button onClick={getData}>No</button>
+            <div className="prompt-buttons">
+                <div className="button-div green" onClick={selectPrompt}>
+                    <Link to={`/new/${prompt}`}>Yes</Link>
+                </div>
+                <div className="button-div red" onClick={getData}>
+                    <a>No</a>
+                </div>
             </div>
         </div>
     )
