@@ -13,8 +13,8 @@ app.use(cors());
 app.use(methodOverride("_method"));
 
 app.use("/user", userRoutes);
-//app.use("/prompt", promptRoutes);
-//app.use("/feed", feedRoutes);
+app.use("/prompt", promptRoutes);
+app.use("/feed", feedRoutes);
 app.use(express.static("static"));
 
 app.listen(4000, () => console.log("Server 4000 running"));
