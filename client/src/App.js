@@ -12,7 +12,7 @@ function App() {
   return (
    <Router>
       <div className="wrapper"> 
-        <Header user={currentUser} />
+        <Header user={currentUser} setCurrentUser={setCurrentUser} />
         <main>
           <Content user={currentUser} setCurrentUser={setCurrentUser} />
         </main>

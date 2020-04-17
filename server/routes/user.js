@@ -2,6 +2,8 @@ const express = require("express");
 const fs = require("fs");
 
 const userFilePath = "./jsonData/user.json";
+const feedFilePath = './jsonData/feed.json';
+const promptFilePath = "./jsonData/prompts.json";
 
 const router = express.Router();
 
@@ -46,6 +48,7 @@ router.post("/signup", (req, res) => {
   }
 
   const newUser = {
+    id: allUsers.length,
     name: userName, 
     email: userEmail, 
     password: userPassword, 
@@ -60,17 +63,33 @@ router.post("/signup", (req, res) => {
 });
 
 // Update user prompt
-router.put("/:email/prompt", (req, res) => {
+router.post("/:id/prompt", (req, res) => {
+
+  // Get json from users and prompts to update
   let allUsers = JSON.parse(fs.readFileSync(userFilePath));
-  const email = req.params.email;
-  const currentUser = allUsers.filter(user => {
-    return (user.email === email);
+  let allPrompts = JSON.parse(fs.readFileSync(promptFilePath));
+
+  // Use the id to find the correct user
+  const id = req.params.id;
+  allUsers[id].current_prompt = req.body.prompt.title;
+
+  // Check to see if the chosen prompt is already in our json of prompts
+  const currentPrompt = allPrompts.filter(prompt => {
+    return prompt.title === allUsers[id].current_prompt;
   });
 
-  const currentUserIdx = allUsers.indexOf(currentUser);
-  currentUser.current_prompt = req.body.prompt;
+  // If it is not in the json, add it to the json for later
+  if (currentPrompt.length < 1) {
+    const newPrompt = {
+      id: allPrompts.length,
+      title: allUsers[id].current_prompt,
+      type: req.body.type,
+      posts: []
+    }
 
-  allUsers = allUsers.slice(0, currentUserIdx) + currentUser + allUsers.slice(currentUserIdx+1);
+    allPrompts.push(newPrompt);
+    fs.writeFileSync(promptFilePath, allPrompts);
+  }
 
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));
 
@@ -78,19 +97,34 @@ router.put("/:email/prompt", (req, res) => {
 });
 
 // Add a post
-router.put("/:email/post", (req, res) => {
+router.post("/:id/post", (req, res) => {
+
+  // Get ALL OF THE JSON!
   let allUsers = JSON.parse(fs.readFileSync(userFilePath));
-  const email = req.params.email;
-  const currentUser = allUsers.filter(user => {
-    return (user.email === email);
+  let allPrompts = JSON.parse(fs.readFileSync(promptFilePath));
+  let feed = JSON.parse(fs.readFileSync(feedFilePath));
+
+  // Use id params to find current user
+  const id = req.params.id;
+  allUsers[id].posts.push(req.body.post);
+
+  // Find the associated prompt the user was completing
+  const currentPrompt = allPrompts.filter(prompt => {
+    return allUsers[id].current_prompt === prompt.title;
   });
 
-  const currentUserIdx = allUsers.indexOf(currentUser);
-  currentUser.posts.push(req.body.post);
+  // If found, push the post to that prompt
+  if (currentPrompt.length > 0) {
+    currentPrompt[0].posts.push(req.body.post);
+  }
 
-  allUsers = allUsers.slice(0, currentUserIdx) + currentUser + allUsers.slice(currentUserIdx+1);
+  // Push the post to the feed list
+  feed.push(post);
 
+  // Now write all the json
   fs.writeFileSync(userFilePath, JSON.stringify(allUsers));
+  fs.writeFileSync(promptFilePath, JSON.stringify(allPrompts));
+  fs.writeFileSync(feedFilePath, JSON.stringify(feed));
 
   res.send(currentUser);
 });
