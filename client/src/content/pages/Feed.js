@@ -92,7 +92,7 @@ export default function Feed({user, setUser}) {
                         <h3>Prompt: {item.prompt}</h3>
                     </Grid>
                     </Grid>
-                    <img src={item.link ? item.link : "http://www.placekitten.com/400/400"} width="100%" />
+                    <img src={item.link ? item.link : "http://www.placekitten.com/400/300"} width="100%" height="300px" />
                     <h3>Title: {item.title}</h3>
                     <p>{item.description}</p>
                 </Grid>
