@@ -21,6 +21,19 @@ router.get("/", (req, res) => {
   res.send(promptTitles);
 });
 
+// Get random Prompt
+router.get("/random", (req, res) => {
+  const allPrompts = JSON.parse(fs.readFileSync(promptFilePath));
+
+  const randomInt = Math.floor(Math.random() * allPrompts.length);
+
+  if (!allPrompts[randomInt]) {
+    res.send({message: "Could not retreive random prompt"});
+    return;
+  }
+  res.send(allPrompts[randomInt]);
+})
+
 // Get Prompt based on title
 router.get("/:title", (req, res) => {
   const allPrompts = JSON.parse(fs.readFileSync(promptFilePath));

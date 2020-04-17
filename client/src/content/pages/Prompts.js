@@ -6,7 +6,7 @@ import Slide from '@material-ui/core/Slide';
 export default function Prompts({user, setUser}) {
     // To get an initial value to show on the prompt card
     useEffect(() => {
-        getData();
+        getPrompt();
     }, []);
 
     const [prompt, setPrompt] = useState("");
@@ -20,16 +20,45 @@ export default function Prompts({user, setUser}) {
                 getData();
             } else {
                 setPrompt(response.data);
+                setMessage(null);
             }
         }).catch(err=>{
             setMessage("Error, unable to fetch prompt");
             console.log(err);
         });
+    }
+
+    const getRandomUserPrompt = () => {
+        axios.get("http://localhost:4000/prompt/random")
+            .then(response => {
+                if (response.data.message) {
+                    setMessage(response.data.message);
+                    getData();
+                } else {
+                    setMessage(null);
+                    setPrompt({
+                        activity: response.data.title,
+                        type: response.data.type
+                    });
+                }
+            }).catch(err => {
+                setMessage("Error, could not get a user generated prompt");
+                console.log(err);
+                getData();
+            });
+    }
+
+    const getPrompt = () => {
+        const randomChance = Math.random();
+        if (randomChance < 0.5) {
+            getData();
+        } else {
+            getRandomUserPrompt();
+        }
         setSlide(true);
     }
 
     const sendPrompt = () => {
-        console.log(user, prompt);
         axios.post(`http://localhost:4000/user/${user.id}/prompt`, {title: prompt.activity, type: prompt.type })
             .then(response => {
                 if (response.data.message) {
@@ -63,7 +92,7 @@ export default function Prompts({user, setUser}) {
                     </div>
                     <div className="button-div red" onClick={()=> {
                         setSlide(false);
-                        getData();
+                        getPrompt();
                     }}>
                         <a>No</a>
                     </div>
