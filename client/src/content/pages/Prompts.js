@@ -87,7 +87,7 @@ export default function Prompts({user, setUser}) {
                 <h2>
                     {prompt.activity}
                 </h2>
-                <h3>Does this spark joy?</h3>
+                <h3>Does this activity spark joy?</h3>
                 <div className="prompt-buttons">
                     <div className="button-div green" onClick={() => sendPrompt()}>
                         <Link className="App-link" to={`/new/${prompt.activity}`}>Yes</Link>
