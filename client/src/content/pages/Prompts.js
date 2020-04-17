@@ -92,7 +92,7 @@ export default function Prompts({user, setUser}) {
                     <div className="button-div green" onClick={() => sendPrompt()}>
                         <Link className="App-link" to={`/new/${prompt.activity}`}>Yes</Link>
                     </div>
-                    <div className="button-div red" onClick={()=> {
+                    <div className="button-div green" onClick={()=> {
                         setSlide(false);
                         getPrompt();
                     }}>
