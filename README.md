@@ -1,6 +1,13 @@
 # InJoy
 Web Application Project for [General Assembly's](https://generalassemb.ly/) internal 24 hour 'Sparks Joy' Hackathon. Working in a team of four, our decided direction was to create a mobile-first web application that provided users with a prompt for a fun task to complete and then upload a post about, from home. 
 
+# Setup
+1. npm install inside of the `/client` folder
+2. npm install inside of the `/server` folder
+3. run `npm start` inside of the `/client` folder
+4. run `npx nodemon app.js` or just `nodemon app.js` inside the `server` folder
+5. All done!
+
 # Team
 We worked in a team of four made up of two User Experience Designers and two Developers.  
 [Signe Bergman - UX Designer](https://www.linkedin.com/in/signebergman/)  
@@ -24,12 +31,10 @@ We worked in a team of four made up of two User Experience Designers and two Dev
 3. Prompts were provided for a user to choose from, one at a time, so user's could either decide if that prompt interested them or not. If not, a new prompt replaced the previous one. Currently, all prompts are sourced from the [Bored API](https://www.boredapi.com/), so while we do have quite a few of them, they are not all prompts that can be accomplished while remaining at home.
 4. User's were able to select a prompt and then post about it. Currently you can supply the app with a title, a description, and a link to an image. After submitting a post, that post then displays on the feed.
 
-# Setup
-1. npm install inside of the `/client` folder
-2. npm install inside of the `/server` folder
-3. run `npm start` inside of the `/client` folder
-4. run `npx nodemon app.js` or just `nodemon app.js` inside the `server` folder
-5. All done!
+# Current Product Images  
+<img src="https://github.com/melissay94/InJoy/blob/master/injoyHomepage.9e630e3e.png" width="250" > <img src="https://github.com/melissay94/InJoy/blob/master/injoySignupflow.432d0ddf.png" width="250" >  
+
+<img src="https://github.com/melissay94/InJoy/blob/master/injoyFlashCard.f007b864.png" width="250"> <img src="https://github.com/melissay94/InJoy/blob/master/injoyFeed.2d2911bc.png" width="250" >
 
 
 # Future Goals
