@@ -8,14 +8,33 @@ import axios from 'axios';
 import usePost from '../../hooks/usePost';
 
 export default function NewPost({user, setUser}){
-
   const [newPost, setNewPost] = useState(null);
+  const [showWidget, setShowWidget] = useState(false);
+  const [uploadResult, setUploadResult] = useState('');
+  const [link, setLink] = useState('');
+
+  let widget = window.cloudinary.createUploadWidget({ 
+    cloudName: 'demo', uploadPreset: 'blog_upload' }, 
+    (error, result) => { setUploadResult(result)}); 
+
+  if (showWidget) {
+    widget.open();
+    setShowWidget(false);
+  }
+
+  const handleUpload = () => {
+    if (uploadResult.event == 'success') {
+      console.log("photo successfully uploaded");
+      setLink(uploadResult.event.info.secure_url);
+    }
+  }
 
   const sendPost = () => {
+    handleUpload();
     axios.post(`http://localhost:4000/user/${user.id}/post`, {
       title: inputs.title,
       description: inputs.description,
-      link: inputs.link,
+      link: link,
       user: user.name,
       prompt: user.current_prompt
     }).then(response => {
@@ -57,7 +76,8 @@ export default function NewPost({user, setUser}){
       <form onSubmit={handleSubmit}>
           <TextField label="Title" type="text" name="title" onChange={handleInputChange} value={inputs.title} />
           <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
-          <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} />
+          {/* <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} /> */}
+          <Button onClick={()=>setShowWidget(true)}>Upload an Image</Button>
           <Button type="submit">
             
               Submit
