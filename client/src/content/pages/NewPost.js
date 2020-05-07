@@ -6,27 +6,32 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
 import usePost from '../../hooks/usePost';
+import { openUploadWidget } from '../../utils/CloudinarySetup';
 
 export default function NewPost({user, setUser}){
   const [newPost, setNewPost] = useState(null);
-  const [showWidget, setShowWidget] = useState(false);
-  const [uploadResult, setUploadResult] = useState('');
+  const [image, setImage] = useState(null);
   const [link, setLink] = useState('');
 
-  let widget = window.cloudinary.createUploadWidget({ 
-    cloudName: 'demo', uploadPreset: 'blog_upload' }, 
-    (error, result) => { setUploadResult(result)}); 
-
-  if (showWidget) {
-    widget.open();
-    setShowWidget(false);
-  }
-
   const handleUpload = () => {
-    if (uploadResult.event == 'success') {
-      console.log("photo successfully uploaded");
-      setLink(uploadResult.event.info.secure_url);
-    }
+    const options = {
+      cloudName: process.env.REACT_APP_CLOUD_NAME,
+      tags: ['feed'],
+      uploadPreset: process.env.REACT_APP_UPLOAD_PRESET
+    };
+
+    openUploadWidget(options, (error, photo) => {
+      if (!error) {
+        console.log(photo);
+        if (photo.event === 'success') {
+          setImage(photo.info.public_id);
+        } else {
+          console.log("Issue uploading photo");
+        }
+      } else {
+        console.log(error);
+      }
+    })
   }
 
   const sendPost = () => {
@@ -77,11 +82,9 @@ export default function NewPost({user, setUser}){
           <TextField label="Title" type="text" name="title" onChange={handleInputChange} value={inputs.title} />
           <TextField label="What did you do?" multiline type="text" name="description" onChange={handleInputChange} value={inputs.description} />
           {/* <TextField label="Do you have a link to an image?" type="url" name="link" onChange={handleInputChange} value={inputs.link} /> */}
-          <Button onClick={()=>setShowWidget(true)}>Upload an Image</Button>
+          <Button onClick={()=>handleUpload()}>Upload an Image</Button>
           <Button type="submit">
-            
               Submit
-            
           </Button>
         </form>
     </div>
