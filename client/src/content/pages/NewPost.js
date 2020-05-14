@@ -14,8 +14,13 @@ export default function NewPost({user, setUser}){
   const [link, setLink] = useState('');
 
   let widget = window.cloudinary.createUploadWidget({ 
-    cloudName: 'demo', uploadPreset: 'blog_upload' }, 
-    (error, result) => { setUploadResult(result)}); 
+    cloudName: 'erik-hei', uploadPreset: 'j3mbvygu'}, 
+    (error, result) => { 
+      // setUploadResult(result);
+      if (!error && result && result.event === "success") { 
+        console.log('Done! Here is the image info: ', result.info); 
+      }
+    }); 
 
   if (showWidget) {
     widget.open();
