@@ -9,27 +9,38 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       username: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       profileImage: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       promptId: {
+        allowNull: true,
+        defaultValue: null,
         type: Sequelize.INTEGER
       },
       promptExp: {
+        allowNull: true,
+        defaultValue: null,
         type: Sequelize.DATE
       },
       hasPosted: {
+        allowNull: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {
