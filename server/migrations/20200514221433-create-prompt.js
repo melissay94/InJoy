@@ -9,12 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       image: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       tips: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       categoryId: {
