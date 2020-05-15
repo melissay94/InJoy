@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Category = sequelize.define('Category', {
+  const category = sequelize.define('category', {
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  Category.associate = function(models) {
+  category.associate = function(models) {
     // associations can be defined here
-    Category.belongsToMany(models.User, { through: "UserCategory" });
-    Category.hasMany(models.Prompt);
+    category.belongsToMany(models.user, { through: "usercategories" });
+    category.hasMany(models.prompt);
   };
-  return Category;
+  return category;
 };

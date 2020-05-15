@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const user = sequelize.define('user', {
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -57,25 +57,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  User.associate = function(models) {
+  user.associate = function(models) {
     // associations can be defined here
-    User.belongsToMany(models.User, { through: "Following" });
-    User.belongsToMany(models.Post, { through: "Like" });
-    User.belongsToMany(models.Category, { through: "UserCategory"});
-    User.hasMany(models.Comment);
-    User.hasMany(models.Post);
-    User.belongsTo(models.Prompt);
+    user.belongsToMany(models.User, { through: "followings" });
+    user.belongsToMany(models.Post, { through: "likes" });
+    user.belongsToMany(models.Category, { through: "usercategories"});
+    user.hasMany(models.Comment);
+    user.hasMany(models.Post);
+    user.belongsTo(models.Prompt);
   };
 
-  User.prototype.validPassword = function(passwordTyped) {
+  user.prototype.validPassword = function(passwordTyped) {
     return bcrypt.compareSync(passwordTyped, this.password);
   }
 
-  User.prototype.toJSON  = function() {
+  user.prototype.toJSON  = function() {
     let userData = this.get();
     delete userData.password;
     return userData;
   }
 
-  return User;
+  return user;
 };

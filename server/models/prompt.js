@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Prompt = sequelize.define('Prompt', {
+  const prompt = sequelize.define('prompt', {
     title: {
       type:DataTypes.STRING,
       validate:{
@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     categoryId: DataTypes.INTEGER
   }, {});
-  Prompt.associate = function(models) {
+  prompt.associate = function(models) {
     // associations can be defined here
-    Prompt.hasMany(models.Post);
-    Prompt.hasMany(models.User);
-    Prompt.belongsTo(models.Category);
+    prompt.hasMany(models.post);
+    prompt.hasMany(models.user);
+    prompt.belongsTo(models.category);
   };
-  return Prompt;
+  return prompt;
 };
