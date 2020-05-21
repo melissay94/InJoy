@@ -1,20 +1,41 @@
-const express = require("express");
-const cors = require("cors");
-const methodOverride = require("method-override");
+const express = require('express');
+const cors = require('cors');
+const { ApolloServer, gql} = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const userRoutes = require("./routes/user");
-const promptRoutes = require("./routes/prompts");
-const feedRoutes = require("./routes/feed");
+// Define schema path
+const schema = require('./schema');
+// Define models path
+const models = require('./models');
+// Define query resolvers path
+// Define Mutation resolvers path
+
+// Define custom resolvers paths
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const port = process.env.PORT || 4000;
+
 app.use(cors());
-app.use(methodOverride("_method"));
 
-app.use("/user", userRoutes);
-app.use("/prompt", promptRoutes);
-app.use("/feed", feedRoutes);
-app.use(express.static("static"));
+// Authentication logic
 
-app.listen(4000, () => console.log("Server 4000 running"));
+// Add resolvers object
+const resolvers = {};
+
+// Declare server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    return {
+      models
+    }
+  }
+});
+server.applyMiddleware({ app });
+
+models.sequelize.authenticate();
+models.sequelize.sync();
+
+app.listen({ port }, () => console.log(`We're all mad here on port ${port}:${server.graphqlPath}`));
