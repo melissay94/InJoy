@@ -20,6 +20,14 @@ type Mutation {
   addCommentToPost(id: Int!, comment: Comment!): Comment
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
+  editComment(id: Int!): Comment
+  deleteComment(id: Int!): Boolean
+  createPrompt(category_id: Int!, prompt: Prompt!): Prompt
+  editPrompt(id: Int!): Prompt
+  deletePrompt(id: Int!): Boolean
+  createPost(prompt_id: Int!, post: Post!): Post
+  addPromptToCategory(prompt_id: Int!, category_id: Int!): Prompt
+  addUserToCategory(user_id: Int!, category_id: Int!): User
 }
 
 # Custom types
