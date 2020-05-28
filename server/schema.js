@@ -89,6 +89,7 @@ type Category {
   name: String!
   prompts: [Prompt!]!
   posts: [Post!]!
+  users: [User!]!
 }
 
 
