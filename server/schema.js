@@ -17,17 +17,16 @@ type Mutation {
   deleteCurrentUser: Boolean
   editPost(id:Int!, title: String, description: String): Post
   deletePost(id: Int!): Boolean
-  addCommentToPost(id: Int!, comment: Comment!): Comment
+  addCommentToPost(postId: Int!, comment: String!, userId: Int!): Comment
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
-  editComment(id: Int!): Comment
+  editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
-  createPrompt(category_id: Int!, prompt: Prompt!): Prompt
-  editPrompt(id: Int!): Prompt
+  createPrompt(categoryId: Int!, title: String!, image: String, tips: String): Prompt
+  editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
-  createPost(prompt_id: Int!, post: Post!): Post
-  addPromptToCategory(prompt_id: Int!, category_id: Int!): Prompt
-  addUserToCategory(user_id: Int!, category_id: Int!): User
+  createPost(promptId: Int!, userId: Int!, title: String!, image: String, description: String): Post
+  addCategoryToUser(categoryId: Int!): User
 }
 
 # Custom types
@@ -36,14 +35,14 @@ type User {
   username: String!
   email: String!
   password: String!
-  name: String,
-  profileImage: String,
-  currentPrompt: # Prompt
-  promptExpiration: String,
-  hasPosted: Boolean,
-  comments: #[Comment!]!
+  name: String
+  profileImage: String
+  currentPrompt: Prompt
+  promptExpiration: String
+  hasPosted: Boolean
+  comments: [Comment!]!
   followers: [User!]!
-  categories: #[Category!]!
+  categories: [Category!]!
   postsCreated: [Post!]!
   postsLiked: [Post!]!
 }
@@ -61,7 +60,33 @@ type Post {
   user: User!
   image: String
   description: String
+  comments: [Comment!]!
+  likes: [User!]!
 }
+
+type Prompt {
+  id: Int!
+  title: String!
+  image: String
+  tips: String
+  category: Category!
+  posts: [Post!]!
+}
+
+type Comment {
+  id: Int!
+  comment: String!
+  user: User!
+  post: Post!
+}
+
+type Category {
+  id: Int!
+  name: String!
+  prompts: [Prompt!]!
+  posts: [Post!]!
+}
+
 
 `;
 
