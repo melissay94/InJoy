@@ -5,13 +5,15 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 // Define schema path
-const schema = require('./schema');
+const typeDefs = require('./schema');
 // Define models path
 const models = require('./models');
 // Define query resolvers path
+const Query = require('./resolvers/Query');
 // Define Mutation resolvers path
-
+const Mutation = require('./resolvers/Mutation');
 // Define custom resolvers paths
+const User = require('./resolvers/User');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -19,9 +21,32 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 
 // Authentication logic
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null || token == "") {
+    return next();
+  }
+
+  jwt.verify(token, process.env.APP_SECRET, (err, user) => {
+    if (err) {
+      res.sendStatus(403);
+    }
+
+    req.user = user;
+    next();
+  });
+}
+
+app.use(authenticate);
 
 // Add resolvers object
-const resolvers = {};
+const resolvers = {
+  Query,
+  Mutation,
+  User
+};
 
 // Declare server
 const server = new ApolloServer({
@@ -29,10 +54,12 @@ const server = new ApolloServer({
   resolvers,
   context: ({ req }) => {
     return {
+      currentUser: req.user,
       models
     }
   }
 });
+
 server.applyMiddleware({ app });
 
 models.sequelize.authenticate();

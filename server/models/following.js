@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Following = sequelize.define('following', {
+  const following = sequelize.define('following', {
     userId: DataTypes.INTEGER,
     follwingId: DataTypes.INTEGER
   }, {});

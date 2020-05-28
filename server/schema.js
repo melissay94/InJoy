@@ -7,6 +7,10 @@ type Query {
   user(id: Int!): User
   posts: [Post!]!
   post(id: Int!): Post
+  prompt(id: Int!): Prompt
+  prompts: [Prompt!]!
+  category(id: Int!): Category
+  categories: [Category!]!
 }
 
 type Mutation {

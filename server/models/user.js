@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     hasPosted: DataTypes.BOOLEAN
   }, {
     hooks: {
-      beforeCreated: (createdUser, options) => {
+      beforeCreate: (createdUser, options) => {
         if (createdUser && createdUser.password) {
           const hash = bcrypt.hashSync(createdUser.password, 10);
           createdUser.password = hash;
@@ -59,12 +59,12 @@ module.exports = (sequelize, DataTypes) => {
 
   user.associate = function(models) {
     // associations can be defined here
-    user.belongsToMany(models.User, { through: "followings" });
-    user.belongsToMany(models.Post, { through: "likes" });
-    user.belongsToMany(models.Category, { through: "usercategories"});
-    user.hasMany(models.Comment);
-    user.hasMany(models.Post);
-    user.belongsTo(models.Prompt);
+    user.belongsToMany(models.user, { as: 'Following', through: "followings" });
+    user.belongsToMany(models.post, { through: "likes" });
+    user.belongsToMany(models.category, { through: "usercategories"});
+    user.hasMany(models.comment);
+    user.hasMany(models.post);
+    user.belongsTo(models.prompt);
   };
 
   user.prototype.validPassword = function(passwordTyped) {
