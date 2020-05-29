@@ -15,7 +15,7 @@ type Query {
 
 type Mutation {
   followUser(id: Int!): User
-  signUp(username: String!, email: String!, password: String!, name: String, profileImage: String): AuthPayload
+  signup(username: String!, email: String!, password: String!, name: String, profileImage: String): AuthPayload
   login(email: String!, password: String!): AuthPayload
   editCurrentUser(username: String, email: String, password: String, name: String, profileImage: String): AuthPayload
   deleteCurrentUser: Boolean
@@ -45,7 +45,7 @@ type User {
   promptExpiration: String
   hasPosted: Boolean
   comments: [Comment!]!
-  followers: [User!]!
+  following: [User!]!
   categories: [Category!]!
   postsCreated: [Post!]!
   postsLiked: [Post!]!
