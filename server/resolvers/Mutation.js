@@ -55,7 +55,124 @@ async function login(root, { email, password }, { currentUser, models }) {
   }
 }
 
+async function followUser(root, { id }, { currentUser, models }) {
+
+  if (id === currentUser.userId) {
+     throw new Error("User cannot follow themselves");
+  }
+
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    }
+  });
+
+  const follow = await models.user.findOne({
+    where: {
+      id
+    }
+  });
+
+  if (user && follow) {
+    await user.addFollowed(follow);
+    return user;
+  }
+}
+
+async function editCurrentUser(root, { username, email, name, profileImage }, { currentUser, models }) {
+  
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    }
+  });
+
+  if (user) {
+    console.log(user);
+    const updatedUser = await user.update({
+      username: username || user.username,
+      email: email || user.email,
+      name: name || user.name,
+      profileImage: profileImage || user.profileImage
+    });
+
+    if (updatedUser) {
+      const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s` });
+      return {
+        user: updatedUser,
+        token
+      }
+    } else {
+      throw new Error(`Could not update user ${username} info`);
+    }
+  }
+}
+
+async function editCurrentUserPassword(root, { password, newPassword }, { currentUser, models }) {
+
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    }
+  });
+
+  if (!user) {
+    throw new Error("User could not be found");
+  } else if (!user.validPassword(password)) {
+    throw new Error("Invalid password entered");
+  } else {
+    const updatedUser = await user.update({
+      password: newPassword
+    });
+
+    if (updatedUser) {
+      const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s` });
+      return {
+        user: updatedUser,
+        token
+      }
+    }
+  }
+}
+
+async function deleteCurrentUser(root, args, { currentUser, models }) {
+
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    },
+    include: models.post
+  });
+
+  if (user.posts) {
+    await Promise.all(
+      user.posts.map(post => {
+        return models.post.destroy({
+          where: {
+            id: post.id
+          }
+        });
+      }));
+  }
+
+  if (user) {
+    const userDeleted = await models.user.destroy({
+      where: {
+        id: user.id
+      }
+    });
+
+    return userDeleted > 0;
+  } else {
+    throw new Error("Could not find current user");
+  }
+}
+
 module.exports = {
   signup,
   login,
+  followUser,
+  editCurrentUser,
+  editCurrentUserPassword,
+  deleteCurrentUser
 }

@@ -11,7 +11,7 @@ async function comments(user) {
 }
 
 async function following(user) {
-  const following = await user.getUsers();
+  const following = await user.getFollowed();
 
   return following ? following : [];
 }

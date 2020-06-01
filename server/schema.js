@@ -17,7 +17,8 @@ type Mutation {
   followUser(id: Int!): User
   signup(username: String!, email: String!, password: String!, name: String, profileImage: String): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  editCurrentUser(username: String, email: String, password: String, name: String, profileImage: String): AuthPayload
+  editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
+  editCurrentUserPassword(password: String, newPassword: String): AuthPayload
   deleteCurrentUser: Boolean
   editPost(id:Int!, title: String, description: String): Post
   deletePost(id: Int!): Boolean

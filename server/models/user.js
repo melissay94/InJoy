@@ -53,13 +53,19 @@ module.exports = (sequelize, DataTypes) => {
           const hash = bcrypt.hashSync(createdUser.password, 10);
           createdUser.password = hash;
         }
+      },
+      beforeUpdate: (updatedUser, options) => {
+        if (updatedUser && updatedUser.password) {
+          const hash = bcrypt.hashSync(updatedUser.password, 10);
+          updatedUser.password = hash;
+        }
       }
     }
   });
 
   user.associate = function(models) {
     // associations can be defined here
-    user.belongsToMany(models.user, { as: 'Following', through: "followings" });
+    user.belongsToMany(models.user, { as: 'followed', through: "followings" });
     user.belongsToMany(models.post, { through: "likes" });
     user.belongsToMany(models.category, { through: "usercategories"});
     user.hasMany(models.comment);
