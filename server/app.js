@@ -11,9 +11,11 @@ const models = require('./models');
 // Define query resolvers path
 const Query = require('./resolvers/Query');
 // Define Mutation resolvers path
-const Mutation = require('./resolvers/Mutation');
+const UserMutation = require('./resolvers/UserMutation');
+const PostMutation = require('./resolvers/PostMutation');
 // Define custom resolvers paths
 const User = require('./resolvers/User');
+const Post = require('./resolvers/Post');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -44,8 +46,12 @@ app.use(authenticate);
 // Add resolvers object
 const resolvers = {
   Query,
-  Mutation,
-  User
+  Mutation: {
+    ...UserMutation,
+    ...PostMutation
+  },
+  User,
+  Post
 };
 
 // Declare server

@@ -30,7 +30,7 @@ type Mutation {
   createPrompt(categoryId: Int!, title: String!, image: String, tips: String): Prompt
   editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
-  createPost(promptId: Int!, userId: Int!, title: String!, image: String, description: String): Post
+  createPost(title: String!, image: String, description: String): Post
   addCategoryToUser(categoryId: Int!): User
 }
 
