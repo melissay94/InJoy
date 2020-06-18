@@ -19,3 +19,9 @@ async function posts(category) {
   
     return prompts ? prompts : null;
   }
+
+module.exports = {
+    posts,
+    users,
+    prompts
+}

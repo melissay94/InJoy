@@ -12,3 +12,8 @@ async function posts(prompt) {
   
     return category ? category : null;
   }
+
+module.exports = {
+    posts,
+    category
+}

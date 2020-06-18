@@ -70,25 +70,25 @@ async function prompts(root, args, { models }) {
   return prompts ? prompts : [];
 }
 
-async function comment(root, { id }, { models }) {
-  const comment = await models.comment.findOne({
-    where: {
-      id: id
-    }
-  });
+// async function comment(root, { id }, { models }) {
+//   const comment = await models.comment.findOne({
+//     where: {
+//       id: id
+//     }
+//   });
 
-  if (comment) {
-    return comment;
-  } else {
-    throw new Error("Could not find category");
-  }
-}
+//   if (comment) {
+//     return comment;
+//   } else {
+//     throw new Error("Could not find category");
+//   }
+// }
 
-async function comments(root, args, { models }) {
-  const comments = await models.comment.findAll();
+// async function comments(root, args, { models }) {
+//   const comments = await models.comment.findAll();
 
-  return comments ? comments : [];
-}
+//   return comments ? comments : [];
+// }
 
 async function category(root, { id }, { models }) {
   const category = await models.category.findOne({
@@ -117,8 +117,6 @@ module.exports = {
   post,
   prompt,
   prompts,
-  comment,
-  comments,
   category,
   categories
 }

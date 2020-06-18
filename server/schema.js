@@ -32,6 +32,7 @@ type Mutation {
   deletePrompt(id: Int!): Boolean
   createPost(title: String!, image: String, description: String): Post
   addCategoryToUser(categoryId: Int!): User
+  addPromptToCategory(promptId: Int!, categoryId: Int!): Prompt
 }
 
 # Custom types

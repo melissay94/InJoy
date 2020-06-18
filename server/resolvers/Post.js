@@ -21,3 +21,10 @@ async function likes(post)  {
 
   return likes ? likes : [];
 }
+
+module.exports = {
+  prompt,
+  user,
+  comments,
+  likes
+}

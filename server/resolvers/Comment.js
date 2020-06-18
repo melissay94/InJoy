@@ -13,3 +13,7 @@ async function user(comment) {
     return post ? post : null;
   }
   
+module.exports = {
+    user,
+    post
+}
