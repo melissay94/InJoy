@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
   prompt.associate = function(models) {
     // associations can be defined here
     prompt.hasMany(models.post);
-    prompt.hasMany(models.user);
+    prompt.belongsTo(models.user);
+    prompt.hasMany(models.user)
     prompt.belongsTo(models.category);
   };
   return prompt;

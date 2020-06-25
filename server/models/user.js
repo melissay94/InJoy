@@ -71,6 +71,7 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.comment);
     user.hasMany(models.post);
     user.belongsTo(models.prompt);
+    user.hasMany(models.prompt);
   };
 
   user.prototype.validPassword = function(passwordTyped) {

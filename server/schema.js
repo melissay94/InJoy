@@ -22,7 +22,7 @@ type Mutation {
   deleteCurrentUser: Boolean
   editPost(id:Int!, title: String, description: String): Post
   deletePost(id: Int!): Boolean
-  addCommentToPost(postId: Int!, comment: String!, userId: Int!): Comment
+  createComment(postId: Int!, comment: String!, userId: Int!): Comment
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
   editComment(id: Int!, comment: String): Comment
@@ -77,6 +77,7 @@ type Prompt {
   tips: String
   category: Category!
   posts: [Post!]!
+  user: User!
 }
 
 type Comment {
