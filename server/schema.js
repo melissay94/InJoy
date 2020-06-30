@@ -20,17 +20,17 @@ type Mutation {
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
   deleteCurrentUser: Boolean
+  createPost(title:String!, image:String, description: String): Post
   editPost(id:Int!, title: String, description: String): Post
   deletePost(id: Int!): Boolean
-  createComment(postId: Int!, comment: String!, userId: Int!): Comment
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
+  createComment(postId: Int!, comment: String!, userId: Int!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
   createPrompt(categoryId: Int!, title: String!, image: String, tips: String): Prompt
   editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
-  createPost(title: String!, image: String, description: String): Post
   addCategoryToUser(categoryId: Int!): User
   addPromptToCategory(promptId: Int!, categoryId: Int!): Prompt
 }
