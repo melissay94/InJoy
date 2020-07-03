@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     postId: DataTypes.INTEGER
   }, {});
   like.associate = function(models) {
-    // associations can be defined here
+    // No associations, join table
   };
   return like;
 };

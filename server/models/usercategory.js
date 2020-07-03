@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     categoryId: DataTypes.INTEGER
   }, {});
   usercategory.associate = function(models) {
-    // associations can be defined here
+    // No association, join table
   };
   return usercategory;
 };

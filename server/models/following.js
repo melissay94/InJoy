@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     followedId: DataTypes.INTEGER
   }, {});
   following.associate = function(models) {
-    // associations can be defined here
+    // No associations, just a join table
   };
   return following;
 };

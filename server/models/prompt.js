@@ -23,10 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     categoryId: DataTypes.INTEGER
   }, {});
   prompt.associate = function(models) {
-    // associations can be defined here
+    // A prompt can have many posts created for it
     prompt.hasMany(models.post);
-    prompt.belongsTo(models.user);
-    prompt.hasMany(models.user)
+    // A prompt can be created by a user
+    prompt.belongsTo(models.user, {as: "author", constraints: false, allowNull: true, defaultValue: null});
+    // A prompt can have many users assigned to it
+    prompt.hasMany(models.user);
+    // A prompt has a category it belongs to
     prompt.belongsTo(models.category);
   };
   return prompt;

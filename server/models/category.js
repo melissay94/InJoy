@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   category.associate = function(models) {
-    // associations can be defined here
+    // Many users can have many categories
     category.belongsToMany(models.user, { through: "usercategories" });
+    // Each category has many prompts tied to it
     category.hasMany(models.prompt);
   };
   return category;

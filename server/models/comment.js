@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     postId: DataTypes.INTEGER
   }, {});
   comment.associate = function(models) {
-    // associations can be defined here
-      // 1 post: M comments, 1 user: M comments
-      models.comment.belongsTo(models.user);
-      models.comment.belongsTo(models.post);    
+    // A comment is posted by a user
+    models.comment.belongsTo(models.user);
+    // A comment is attached to a post
+    models.comment.belongsTo(models.post);    
   };
   return comment;
 };

@@ -64,14 +64,20 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   user.associate = function(models) {
-    // associations can be defined here
+    // Users can follow other users
     user.belongsToMany(models.user, { as: 'followed', through: "followings" });
+    // Users can like many posts
     user.belongsToMany(models.post, { through: "likes" });
+    // Users can save many categories
     user.belongsToMany(models.category, { through: "usercategories"});
+    // A user can create multiple comments
     user.hasMany(models.comment);
+    // A user can create multiple posts
     user.hasMany(models.post);
+    // A user can be assigned to a prompt
     user.belongsTo(models.prompt);
-    user.hasMany(models.prompt);
+    // A user can create multiple prompts
+    user.hasMany(models.prompt, { as: "createdPrompt", constraints: false, allowNull: true, defaultValue: null});
   };
 
   user.prototype.validPassword = function(passwordTyped) {

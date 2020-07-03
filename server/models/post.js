@@ -8,11 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     promptId: DataTypes.INTEGER
   }, {});
   post.associate = function(models) {
-    // associations can be defined here
-    // 1 prompt: M posts, 1 user: M posts
+    // A post is created by a user
     models.post.belongsTo(models.user);
+    // A post is created to complete a prompt
     models.post.belongsTo(models.prompt);
+    // A post has many comments posted to it
     models.post.hasMany(models.comment);
+    // Posts can be liked by multiple users
     models.post.belongsToMany(models.user, { through: "likes" });
   };
   return post;
