@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     // 1 prompt: M posts, 1 user: M posts
     models.post.belongsTo(models.user);
     models.post.belongsTo(models.prompt);
+    models.post.hasMany(models.comment);
+    models.post.belongsToMany(models.user, { through: "likes" });
   };
   return post;
 };

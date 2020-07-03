@@ -88,7 +88,6 @@ async function editCurrentUser(root, { username, email, name, profileImage }, { 
   });
 
   if (user) {
-    console.log(user);
     const updatedUser = await user.update({
       username: username || user.username,
       email: email || user.email,
