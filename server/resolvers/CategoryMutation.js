@@ -40,6 +40,8 @@ async function addCategoryToUser(root, { id }, { currentUser, models }) {
       },
       includes: models.category
     });
+
+    console.log(user);
     
     if (!user) {
         throw new Error("Unable to find user at this time.");
@@ -49,7 +51,9 @@ async function addCategoryToUser(root, { id }, { currentUser, models }) {
         where: {
             id
         }
-    })
+    });
+
+    console.log(category);
 
     if (!category) {
         throw new Error("Unable to find category at this time.");

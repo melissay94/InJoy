@@ -13,9 +13,15 @@ const Query = require('./resolvers/Query');
 // Define Mutation resolvers path
 const UserMutation = require('./resolvers/UserMutation');
 const PostMutation = require('./resolvers/PostMutation');
+const CategoryMutation = require('./resolvers/CategoryMutation');
+const PromptMutation = require('./resolvers/PromptMutation');
+const CommentMutation = require('./resolvers/CommentMutation');
 // Define custom resolvers paths
 const User = require('./resolvers/User');
 const Post = require('./resolvers/Post');
+const Category = require('./resolvers/Category');
+const Prompt = require('./resolvers/Prompt');
+const Comment = require('./resolvers/Comment');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -48,10 +54,16 @@ const resolvers = {
   Query,
   Mutation: {
     ...UserMutation,
-    ...PostMutation
+    ...PostMutation,
+    ...CategoryMutation,
+    ...CommentMutation,
+    ...PromptMutation
   },
   User,
-  Post
+  Post,
+  Category,
+  Comment,
+  Prompt
 };
 
 // Declare server
