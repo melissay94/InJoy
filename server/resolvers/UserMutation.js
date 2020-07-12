@@ -117,21 +117,59 @@ async function editCurrentUserPassword(root, { password, newPassword }, { curren
 
   if (!user) {
     throw new Error("User could not be found");
-  } else if (!user.validPassword(password)) {
-    throw new Error("Invalid password entered");
-  } else {
-    const updatedUser = await user.update({
-      password: newPassword
-    });
-
-    if (updatedUser) {
-      const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s` });
-      return {
-        user: updatedUser,
-        token
-      }
-    }
   }
+  
+  if (!user.validPassword(password)) {
+    throw new Error("Invalid password entered");
+  }
+
+  const updatedUser = await user.update({
+    password: newPassword
+  });
+
+  if (!updatedUser) {
+    throw new Error(`Unable to update password for ${user.username}`);
+  }
+
+  const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET, { expiresIn: `${60 * 60 * 24}s` });
+  return {
+    user: updatedUser,
+    token
+  }
+}
+
+async function updateCurrentUserPrompt(root, { promptId }, { currentUser, models }) {
+
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    }
+  });
+
+  if (!user) {
+    throw new Error("User could not be found");
+  }
+
+  const prompt = await models.prompt.findOne({
+    where: {
+      id: promptId
+    }
+  });
+
+  if (!prompt) {
+    throw new Error("Invalid prompt. Could not find.");
+  }
+
+  const updatedUser = user.update({
+    promptId,
+    promptExp: new Date()
+  });
+
+  if (!updatedUser) {
+    throw new Error(`Unable to update ${user.username}'s current prompt`);
+  }
+
+  return updatedUser;
 }
 
 async function deleteCurrentUser(root, args, { currentUser, models }) {
@@ -173,5 +211,6 @@ module.exports = {
   followUser,
   editCurrentUser,
   editCurrentUserPassword,
-  deleteCurrentUser
+  deleteCurrentUser,
+  updateCurrentUserPrompt
 }
