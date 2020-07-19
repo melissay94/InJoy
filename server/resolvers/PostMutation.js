@@ -1,6 +1,6 @@
 
 // Post mutations
-async function createPost(root, { title, image, description }, { currentUser, models }) {
+async function createPost(root, { promptId }, { currentUser, models }) {
   // Need the user
   const user = await models.user.findOne({
     where: {

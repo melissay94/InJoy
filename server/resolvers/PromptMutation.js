@@ -34,7 +34,7 @@ async function createPrompt(root, { title, image, tips, categoryId }, { currentU
       image,
       tips,
       categoryId: category.id,
-      authorId: user.id
+      userId: user.id
     });
   
     if (!newPrompt) {
@@ -57,7 +57,7 @@ async function editPrompt(root, { id, title, image, tips, categoryId }, { curren
         throw new Error("Could not retrieve prompt to update.");
     }
 
-    if (prompt.authorId != currentUser.id) {
+    if (prompt.userId != currentUser.id) {
         throw new Error("Unable to edit prompt, not posted by current user.");
     }
 
@@ -91,7 +91,7 @@ async function deletePrompt(root, { id }, { currentUser, models }) {
         throw new Error("Issue finding comment to delete.");
     }
 
-    if (prompt.authorId != currentUser.id) {
+    if (prompt.userId != currentUser.id) {
         throw new Error("Unable to delete prompt, not posted by current user.");
     }
 

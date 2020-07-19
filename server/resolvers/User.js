@@ -1,8 +1,3 @@
-async function currentPrompt(user) {
-  const prompt = await user.getPrompt();
-
-  return prompt ? prompt : null;
-}
 
 async function comments(user) {
   const comments = await user.getComments();

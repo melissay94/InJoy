@@ -19,9 +19,9 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
-  updateCurrentUserPrompt(promptId: Int!): User
   deleteCurrentUser: Boolean
-  createPost(title:String!, image:String, description: String): Post
+  createPost(promptId: Int!): Post
+  publishPost(title: String!, description: String, image: String): Post
   editPost(id:Int!, title: String, description: String): Post
   deletePost(id: Int!): Boolean
   addLikeToPost(id: Int!): Boolean
@@ -44,9 +44,6 @@ type User {
   password: String!
   name: String
   profileImage: String
-  currentPrompt: Prompt
-  promptExpiration: String
-  hasPosted: Boolean
   comments: [Comment!]!
   following: [User!]!
   categories: [Category!]!
@@ -67,6 +64,7 @@ type Post {
   user: User!
   image: String
   description: String
+  hasPosted: Boolean
   comments: [Comment!]!
   likes: [User!]!
 }
