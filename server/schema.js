@@ -19,6 +19,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
+  updateCurrentUserPrompt(promptId: Int!): User
   deleteCurrentUser: Boolean
   createPost(title:String!, image:String, description: String): Post
   editPost(id:Int!, title: String, description: String): Post
