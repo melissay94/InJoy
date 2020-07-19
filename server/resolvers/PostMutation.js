@@ -5,20 +5,17 @@ async function createPost(root, { promptId }, { currentUser, models }) {
   const user = await models.user.findOne({
     where: {
       id: currentUser.userId
-    }
+    }, 
+    include: models.post
   });
 
   if (!user) {
     throw new Error("Could not get current user information");
   }
 
-  if (!user.promptId) {
-    throw new Error(`Could not find an active prompt id for ${user.username}`)
-  }
-
   const prompt = await models.prompt.findOne({
     where: {
-      id: user.promptId
+      id: promptId
     }
   });
 
@@ -26,36 +23,82 @@ async function createPost(root, { promptId }, { currentUser, models }) {
     throw new Error(`Could not find prompt for given prompt id`);
   }
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate - 1);
+  const unpublishedPosts = filterUnpublishedPosts(user.posts);
 
-  const promptDate = new Date(user.promptExp);
-  const dateDiff = (Math.abs(promptDate - yesterday)) / (1000 * 60 * 60); // hours difference
-
-  if (dateDiff > 24) {
-    // If it has expired, update user to no longer have a prompt.
-    await user.update({
-      promptId: null,
-      hasPosted: false
+  if (unpublishedPosts.length !== 0) {
+    const updatedPost = await unpublishedPosts[0].update({
+      promptId: prompt.id
     });
 
-    throw new Error(`${user.username}'s prompt has expired. Please select a new prompt.`);
+    if (!updatedPost) {
+      throw new Error(`Could not assign new prompt for ${user.username}`);
+    }
+
+    return updatedPost;
   }
 
   const newPost = await models.post.create({
-    title, 
-    image,
-    description,
     userId: user.id,
     promptId: prompt.id
   });
 
   if (!newPost) {
-    throw new Error(`Could not create new post for ${user.username}`);
+    throw new Error(`Could not assign new prompt for ${user.username}`);
   }
 
   return newPost;
 
+}
+
+async function publishPost(root, { title, description, image }, { currentUser, models }) {
+
+  if ((!description || description.length === 0) && (!image || image.length === 0)) {
+    throw new Error("Must include at least a description or an image");
+  }
+
+  const user = await models.user.findOne({
+    where: { 
+      id: currentUser.userId
+     },
+    include: models.post
+  });
+
+  if (!user) {
+    throw new Error("Could not find user");
+  }
+
+  const newPost = filterUnpublishedPosts(user.posts);
+
+  if (newPost.length === 0) {
+    throw new Error("Invalid prompt. Cannot make post, please choose a new prompt.");
+  }
+
+  const updatedPost = await newPost[0].update({
+    title,
+    description, 
+    image,
+    hasPosted: true
+  });
+
+  if (!updatedPost) {
+    throw new Error("Unable to publish post.");
+  }
+
+  return updatedPost;
+}
+
+function filterUnpublishedPosts(posts) {
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate - 1);
+
+  return posts.filter(post => {
+
+    const postDate = new Date(post.updatedAt);
+    const dateDiff = (Math.abs(postDate - yesterday)) / (1000 * 60 * 60);
+
+    return !post.hasPosted && dateDiff < 24;
+  });
 }
 
 async function editPost(root, { id, title, description }, { currentUser, models }) {
@@ -174,6 +217,7 @@ async function removeLikeFromPost(root, { id }, { currentUser, models }) {
 
 module.exports = {
   createPost,
+  publishPost,
   editPost,
   deletePost,
   addLikeToPost,

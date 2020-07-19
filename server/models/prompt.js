@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     categoryId: DataTypes.INTEGER,
-    authorId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER
   }, {});
   prompt.associate = function(models) {
     // A prompt can have many posts created for it

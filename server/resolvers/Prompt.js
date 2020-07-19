@@ -21,5 +21,6 @@ async function user(prompt){
 
 module.exports = {
     posts,
-    category
+    category,
+    user
 }

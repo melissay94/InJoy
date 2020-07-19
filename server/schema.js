@@ -33,7 +33,7 @@ type Mutation {
   editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
   addCategoryToUser(categoryId: Int!): User
-  addPromptToCategory(promptId: Int!, categoryId: Int!): Prompt
+  removeCategoryFromUser(categoryId: Int!): User
 }
 
 # Custom types
@@ -47,8 +47,9 @@ type User {
   comments: [Comment!]!
   following: [User!]!
   categories: [Category!]!
-  postsCreated: [Post!]!
+  posts: [Post!]!
   postsLiked: [Post!]!
+  prompts: [Prompt!]!
 }
 
 # Authpayload
@@ -93,7 +94,6 @@ type Category {
   posts: [Post!]!
   users: [User!]!
 }
-
 
 `;
 

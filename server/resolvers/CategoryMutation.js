@@ -1,37 +1,5 @@
-// AddPromptToCategory: Prompt
-// AddUserToCategory: User
-
-async function addPromptToCategory(root, { promptId, categoryId }, { models }) {
-
-    const prompt = await models.prompt.findOne({
-      where: {
-        id: promptId
-      }
-    });
-  
-    if (!prompt) {
-      throw new Error("Unable to find prompt at this time.");
-    }
-
-    const category = await models.category.findOne({
-      where: {
-        id: categoryId
-      }
-    });
-  
-    if (!category) {
-      throw new Error("Unable to find category at this time.");
-    }
-
-    try {
-        await category.addPrompt(prompt);
-    } catch(err) {
-        throw new Error(err.message);
-    }
-
-    return prompt;
-}
-  
+// AddCategoryToUser: User
+// RemoveCategoryFromUser: User
 async function addCategoryToUser(root, { id }, { currentUser, models }) {
 
     const user = await models.user.findOne({
@@ -69,6 +37,5 @@ async function addCategoryToUser(root, { id }, { currentUser, models }) {
 }
   
 module.exports = {
-    addPromptToCategory,
     addCategoryToUser
 }

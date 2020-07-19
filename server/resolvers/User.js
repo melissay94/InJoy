@@ -1,4 +1,3 @@
-
 async function comments(user) {
   const comments = await user.getComments();
 
@@ -17,7 +16,7 @@ async function categories(user) {
   return categories ? categories : [];
 }
 
-async function postsCreated(user) {
+async function posts(user) {
   const posts = await user.getPosts();
 
   if (posts) {
@@ -37,11 +36,21 @@ async function postsLiked(user) {
   }
 }
 
+async function prompts(user) {
+  const prompts = await user.getPrompts();
+
+  if (prompts) {
+    return prompts;
+  } else {
+    throw new Error("No prompts found for this user");
+  }
+}
+
 module.exports = {
-  currentPrompt,
   comments,
   following,
   categories,
-  postsCreated,
-  postsLiked
+  posts,
+  postsLiked,
+  prompts
 }

@@ -138,40 +138,6 @@ async function editCurrentUserPassword(root, { password, newPassword }, { curren
   }
 }
 
-async function updateCurrentUserPrompt(root, { promptId }, { currentUser, models }) {
-
-  const user = await models.user.findOne({
-    where: {
-      id: currentUser.userId
-    }
-  });
-
-  if (!user) {
-    throw new Error("User could not be found");
-  }
-
-  const prompt = await models.prompt.findOne({
-    where: {
-      id: promptId
-    }
-  });
-
-  if (!prompt) {
-    throw new Error("Invalid prompt. Could not find.");
-  }
-
-  const updatedUser = user.update({
-    promptId,
-    promptExp: new Date()
-  });
-
-  if (!updatedUser) {
-    throw new Error(`Unable to update ${user.username}'s current prompt`);
-  }
-
-  return updatedUser;
-}
-
 async function deleteCurrentUser(root, args, { currentUser, models }) {
 
   const user = await models.user.findOne({
@@ -211,6 +177,5 @@ module.exports = {
   followUser,
   editCurrentUser,
   editCurrentUserPassword,
-  deleteCurrentUser,
-  updateCurrentUserPrompt
+  deleteCurrentUser
 }
