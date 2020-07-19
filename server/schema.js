@@ -28,7 +28,7 @@ type Mutation {
   createComment(postId: Int!, comment: String!, userId: Int!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
-  createPrompt(categoryId: Int!, title: String!, image: String, tips: String): Prompt
+  createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
   editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
   addCategoryToUser(categoryId: Int!): User

@@ -30,21 +30,6 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      promptId: {
-        allowNull: true,
-        defaultValue: null,
-        type: Sequelize.INTEGER
-      },
-      promptExp: {
-        allowNull: true,
-        defaultValue: null,
-        type: Sequelize.DATE
-      },
-      hasPosted: {
-        allowNull: false,
-        defaultValue: false,
-        type: Sequelize.BOOLEAN
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

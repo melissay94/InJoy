@@ -2,6 +2,43 @@
 // DeleteComment: Boolean
 
 // Comment mutations
+// Post mutations
+async function createComment(root, { postId, comment }, { currentUser, models }) {
+    // Need the user
+    const user = await models.user.findOne({
+      where: {
+        id: currentUser.userId
+      }
+    });
+  
+    if (!user) {
+      throw new Error("Could not get current user information");
+    }
+  
+    const post = await models.post.findOne({
+      where: {
+        id: postId
+      }
+    });
+  
+    if (!post) {
+      throw new Error(`Could not find post for given post id`);
+    }
+
+    const newComment = await models.comment.create({
+      comment,
+      userId: user.id,
+      postId: post.id
+    });
+  
+    if (!newComment) {
+      throw new Error(`Could not create new comment by ${user.username}`);
+    }
+  
+    return newComment;
+  
+  }
+
 async function editComment(root, { id, title, description }, { currentUser, models }) {
     const comment = await models.comment.findOne({
         where: {
@@ -50,6 +87,7 @@ async function deleteComment(root, { id }, { models }) {
 }
 
 module.exports = {
+    createComment,
     editComment,
     deleteComment
 }

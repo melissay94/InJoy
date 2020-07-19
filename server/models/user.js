@@ -42,10 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Missing neccessary password characters. Please include at least one lowercase letter, one uppercase letter, one number, and one special character."
       }
     },
-    profileImage: DataTypes.STRING,
-    promptId: DataTypes.INTEGER,
-    promptExp: DataTypes.DATE,
-    hasPosted: DataTypes.BOOLEAN
+    profileImage: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: (createdUser, options) => {
@@ -74,10 +71,8 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(models.comment);
     // A user can create multiple posts
     user.hasMany(models.post);
-    // A user can be assigned to a prompt
-    user.belongsTo(models.prompt);
     // A user can create multiple prompts
-    user.hasMany(models.prompt, { as: "createdPrompt", constraints: false, allowNull: true, defaultValue: null});
+    user.hasMany(models.prompt);
   };
 
   user.prototype.validPassword = function(passwordTyped) {

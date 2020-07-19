@@ -23,6 +23,10 @@ module.exports = {
       promptId: {
         type: Sequelize.INTEGER
       },
+      hasPosted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

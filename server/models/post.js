@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     description: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-    promptId: DataTypes.INTEGER
+    promptId: DataTypes.INTEGER,
+    hasPosted: DataTypes.BOOLEAN
   }, {});
   post.associate = function(models) {
     // A post is created by a user
