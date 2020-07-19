@@ -20,6 +20,11 @@ type Mutation {
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
   deleteCurrentUser: Boolean
+  addCategoryToUser(categoryId: Int!): User
+  removeCategoryFromUser(categoryId: Int!): User
+  createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
+  editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
+  deletePrompt(id: Int!): Boolean
   createPost(promptId: Int!): Post
   publishPost(title: String!, description: String, image: String): Post
   editPost(id:Int!, title: String, description: String): Post
@@ -29,11 +34,6 @@ type Mutation {
   createComment(postId: Int!, comment: String!, userId: Int!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
-  createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
-  editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
-  deletePrompt(id: Int!): Boolean
-  addCategoryToUser(categoryId: Int!): User
-  removeCategoryFromUser(categoryId: Int!): User
 }
 
 # Custom types
