@@ -17,7 +17,7 @@ async function comments(post)  {
 }
 
 async function likes(post)  {
-  const likes = await post.getLikes();
+  const likes = await post.getUsers();
 
   return likes ? likes : [];
 }

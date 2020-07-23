@@ -90,7 +90,7 @@ async function publishPost(root, { title, description, image }, { currentUser, m
 function filterUnpublishedPosts(posts) {
 
   const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate - 1);
+  yesterday.setDate(yesterday.getDate() - 1);
 
   return posts.filter(post => {
 
@@ -131,7 +131,7 @@ async function editPost(root, { id, title, description }, { currentUser, models 
 
 async function deletePost(root, { id }, { models }) {
 
-  const post = models.post.findOne({
+  const post = await models.post.findOne({
     where: {
       id
     },
@@ -153,7 +153,7 @@ async function deletePost(root, { id }, { models }) {
       }));
   }
 
-  const postDeleted = await post.destroy({
+  const postDeleted = await models.post.destroy({
     where: {
       id: post.id
     }
@@ -167,28 +167,32 @@ async function addLikeToPost(root, { id }, { currentUser, models }) {
   const post = await models.post.findOne({
     where: {
       id
-    },
-    includes: models.user
+    }
   });
 
   if (!post) {
     throw new Error("Unable to like post at this time.");
   }
 
-  const likeIds = post.users.map(user => {
-    return user.id
-  });
-
-  if (likeIds.includes(currentUser.userId)) {
-    throw new Error("User has already liked this post.");
-  }
-
-  const user = models.user.findOne({
-    where: { id }
+  const user = await models.user.findOne({
+    where: { 
+      id: currentUser.userId
+    }
   });
 
   if (!user) {
     throw new Error ("Unable to like post at this time.");
+  }
+
+  // Users in this case is the likes table
+  const likes = await post.getUsers();
+
+  const likeIds = likes.map(user => {
+    return user.id
+  });
+
+  if (likeIds.includes(user.id)) {
+    throw new Error("User has already liked this post.");
   }
 
   const likedPost = await post.addUsers(user);
@@ -208,11 +212,13 @@ async function removeLikeFromPost(root, { id }, { currentUser, models }) {
     }
   });
 
-  if (post && user) {
-    return await post.removeUsers(user);
+  if (!post || !user) {
+    throw new Error("Was unable to unlike post at this time.");
   }
 
-  throw new Error("Was unable to unlike post at this time.");
+  const removedLike = await post.removeUsers(user);
+
+  return removedLike ? true : false;
 }
 
 module.exports = {
