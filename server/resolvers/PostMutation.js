@@ -206,13 +206,17 @@ async function removeLikeFromPost(root, { id }, { currentUser, models }) {
     where: { id }
   });
 
+  if (!post) {
+    throw new Error("Was unable to unlike post at this time.");
+  }
+
   const user = await models.user.findOne({
     where: { 
       id: currentUser.userId
     }
   });
 
-  if (!post || !user) {
+  if (!user) {
     throw new Error("Was unable to unlike post at this time.");
   }
 
