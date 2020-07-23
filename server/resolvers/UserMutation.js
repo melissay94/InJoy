@@ -67,16 +67,61 @@ async function followUser(root, { id }, { currentUser, models }) {
     }
   });
 
+  if (!user) {
+    throw new Error("Could not find user to follow");
+  }
+
   const follow = await models.user.findOne({
     where: {
       id
     }
   });
 
-  if (user && follow) {
-    await user.addFollowed(follow);
-    return user;
+  if (!follow) {
+    throw new Error("Could not follow user");
   }
+
+  await user.addFollowed(follow);
+  return user;
+}
+
+async function unfollowUser(root, { id }, { currentUser, models }) {
+
+  if (id === currentUser.userId) {
+    throw new Error("User cannot unfollow themselves");
+  }
+
+  const user = await models.user.findOne({
+    where: {
+      id: currentUser.userId
+    }
+  });
+
+  if (!user) {
+    throw new Error("Could not find user to unfollow");
+  }
+
+  const currentlyFollowing = await user.getFollowed();
+  const followingIds = currentlyFollowing.map(user => user.id);
+
+  const following = await models.user.findOne({
+    where: {
+      id
+    }
+  });
+
+  if (!following) {
+    throw new Error("Was unable to unfollow other user");
+  }
+
+  if (!followingIds.includes(following.id)) {
+    throw new Error("Cannot unfollow a user you're not following");
+  }
+
+  await user.removeFollowed(following);
+
+  return user;
+
 }
 
 async function editCurrentUser(root, { username, email, name, profileImage }, { currentUser, models }) {
@@ -175,6 +220,7 @@ module.exports = {
   signup,
   login,
   followUser,
+  unfollowUser,
   editCurrentUser,
   editCurrentUserPassword,
   deleteCurrentUser

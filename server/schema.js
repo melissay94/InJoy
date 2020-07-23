@@ -14,9 +14,10 @@ type Query {
 }
 
 type Mutation {
-  followUser(id: Int!): User
   signup(username: String!, email: String!, password: String!, name: String, profileImage: String): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  followUser(id: Int!): User
+  unfollowUser(id: Int!): User
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
   deleteCurrentUser: Boolean
