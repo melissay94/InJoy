@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       beforeUpdate: (updatedUser, options) => {
-        if (updatedUser && updatedUser.password) {
+        if (updatedUser && updatedUser.changed('password')) {
           const hash = bcrypt.hashSync(updatedUser.password, 10);
           updatedUser.password = hash;
         }

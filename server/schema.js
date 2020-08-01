@@ -14,12 +14,18 @@ type Query {
 }
 
 type Mutation {
-  followUser(id: Int!): User
   signup(username: String!, email: String!, password: String!, name: String, profileImage: String): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  followUser(id: Int!): User
+  unfollowUser(id: Int!): User
   editCurrentUser(username: String, email: String, name: String, profileImage: String): AuthPayload
   editCurrentUserPassword(password: String, newPassword: String): AuthPayload
   deleteCurrentUser: Boolean
+  addCategoryToUser(categoryId: Int!): User
+  removeCategoryFromUser(categoryId: Int!): User
+  createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
+  editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
+  deletePrompt(id: Int!): Boolean
   createPost(promptId: Int!): Post
   publishPost(title: String!, description: String, image: String): Post
   editPost(id:Int!, title: String, description: String): Post
@@ -29,12 +35,6 @@ type Mutation {
   createComment(postId: Int!, comment: String!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
-  createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
-  editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
-  deletePrompt(id: Int!): Boolean
-  addCategoryToUser(categoryId: Int!): User
-  removeCategoryFromUser(categoryId: Int!): Boolean
-  addPromptToCategory(promptId: Int!, categoryId: Int!): Prompt
 }
 
 # Custom types
@@ -48,8 +48,9 @@ type User {
   comments: [Comment!]!
   following: [User!]!
   categories: [Category!]!
-  postsCreated: [Post!]!
+  posts: [Post!]!
   postsLiked: [Post!]!
+  prompts: [Prompt!]!
 }
 
 # Authpayload
@@ -94,7 +95,6 @@ type Category {
   posts: [Post!]!
   users: [User!]!
 }
-
 
 `;
 
