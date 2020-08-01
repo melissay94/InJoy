@@ -211,6 +211,5 @@ module.exports = {
   followUser,
   editCurrentUser,
   editCurrentUserPassword,
-  deleteCurrentUser,
-  updateCurrentUserPrompt
+  deleteCurrentUser
 }

@@ -32,7 +32,7 @@ async function addPromptToCategory(root, { promptId, categoryId }, { models }) {
     return prompt;
 }
   
-async function addCategoryToUser(root, { id }, { currentUser, models }) {
+async function addCategoryToUser(root, { categoryId }, { currentUser, models }) {
 
     const user = await models.user.findOne({
       where: {
@@ -49,11 +49,9 @@ async function addCategoryToUser(root, { id }, { currentUser, models }) {
     
     const category = await models.category.findOne({
         where: {
-            id
+            id: categoryId
         }
     });
-
-    console.log(category);
 
     if (!category) {
         throw new Error("Unable to find category at this time.");
@@ -67,8 +65,30 @@ async function addCategoryToUser(root, { id }, { currentUser, models }) {
 
     return user;
 }
+
+async function removeCategoryFromUser(root, { categoryId }, { currentUser, models }) {
+
+    const user = await models.user.findOne({
+      where: {
+        id: currentUser.userId
+      }
+    });
+
+    const category = await models.category.findOne({
+      where: {
+        id: categoryId
+      }
+    })
+
+    if (user && category) {
+      return await category.removeUsers(user);
+    }
+
+   throw new Error("Was unable to remove category from user")
+}
   
 module.exports = {
     addPromptToCategory,
-    addCategoryToUser
+    addCategoryToUser,
+    removeCategoryFromUser
 }

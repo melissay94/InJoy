@@ -26,13 +26,14 @@ type Mutation {
   deletePost(id: Int!): Boolean
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
-  createComment(postId: Int!, comment: String!, userId: Int!): Comment
+  createComment(postId: Int!, comment: String!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
   createPrompt(categoryId: Int!, title: String!, image: String, tips: String, categoryId: Int): Prompt
   editPrompt(id: Int!, title: String, image: String, tips: String): Prompt
   deletePrompt(id: Int!): Boolean
   addCategoryToUser(categoryId: Int!): User
+  removeCategoryFromUser(categoryId: Int!): Boolean
   addPromptToCategory(promptId: Int!, categoryId: Int!): Prompt
 }
 

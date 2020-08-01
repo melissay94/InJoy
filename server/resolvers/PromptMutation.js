@@ -57,7 +57,7 @@ async function editPrompt(root, { id, title, image, tips, categoryId }, { curren
         throw new Error("Could not retrieve prompt to update.");
     }
 
-    if (prompt.userId != currentUser.id) {
+    if (prompt.userId != currentUser.userId) {
         throw new Error("Unable to edit prompt, not posted by current user.");
     }
 
@@ -88,7 +88,7 @@ async function deletePrompt(root, { id }, { currentUser, models }) {
     });
 
     if (!prompt) {
-        throw new Error("Issue finding comment to delete.");
+        throw new Error("Issue finding prompt to delete.");
     }
 
     if (prompt.userId != currentUser.id) {
@@ -98,10 +98,10 @@ async function deletePrompt(root, { id }, { currentUser, models }) {
     if (prompt.posts && prompt.posts.length > 0) {
         throw new Error("Cannot delete prompt that already has associated posts.")
     }
-
-    const promptDeleted = await prompt.destroy({
+    
+    const promptDeleted = await models.prompt.destroy({
         where: {
-        id: prompt.id
+          id
         }
     });
 

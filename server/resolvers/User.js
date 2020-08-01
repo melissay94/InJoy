@@ -38,7 +38,6 @@ async function postsLiked(user) {
 }
 
 module.exports = {
-  currentPrompt,
   comments,
   following,
   categories,
