@@ -8,8 +8,6 @@ async function addCategoryToUser(root, { categoryId }, { currentUser, models }) 
       },
       includes: models.category
     });
-
-    console.log(user);
     
     if (!user) {
         throw new Error("Unable to find user at this time.");
