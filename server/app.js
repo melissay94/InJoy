@@ -1,20 +1,86 @@
-const express = require("express");
-const cors = require("cors");
-const methodOverride = require("method-override");
+const express = require('express');
+const cors = require('cors');
+const { ApolloServer, gql} = require('apollo-server-express');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const userRoutes = require("./routes/user");
-const promptRoutes = require("./routes/prompts");
-const feedRoutes = require("./routes/feed");
+// Define schema path
+const typeDefs = require('./schema');
+// Define models path
+const models = require('./models');
+// Define query resolvers path
+const Query = require('./resolvers/Query');
+// Define Mutation resolvers path
+const UserMutation = require('./resolvers/UserMutation');
+const PostMutation = require('./resolvers/PostMutation');
+const CategoryMutation = require('./resolvers/CategoryMutation');
+const PromptMutation = require('./resolvers/PromptMutation');
+const CommentMutation = require('./resolvers/CommentMutation');
+// Define custom resolvers paths
+const User = require('./resolvers/User');
+const Post = require('./resolvers/Post');
+const Category = require('./resolvers/Category');
+const Prompt = require('./resolvers/Prompt');
+const Comment = require('./resolvers/Comment');
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const port = process.env.PORT || 4000;
+
 app.use(cors());
-app.use(methodOverride("_method"));
 
-app.use("/user", userRoutes);
-app.use("/prompt", promptRoutes);
-app.use("/feed", feedRoutes);
-app.use(express.static("static"));
+// Authentication logic
+const authenticate = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-app.listen(4000, () => console.log("Server 4000 running"));
+  if (token == null || token == "") {
+    return next();
+  }
+
+  jwt.verify(token, process.env.APP_SECRET, (err, user) => {
+    if (err) {
+      res.sendStatus(403);
+    }
+
+    req.user = user;
+    next();
+  });
+}
+
+app.use(authenticate);
+
+// Add resolvers object
+const resolvers = {
+  Query,
+  Mutation: {
+    ...UserMutation,
+    ...PostMutation,
+    ...CategoryMutation,
+    ...CommentMutation,
+    ...PromptMutation
+  },
+  User,
+  Post,
+  Category,
+  Comment,
+  Prompt
+};
+
+// Declare server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    return {
+      currentUser: req.user,
+      models
+    }
+  }
+});
+
+server.applyMiddleware({ app });
+
+models.sequelize.authenticate();
+models.sequelize.sync();
+
+app.listen({ port }, () => console.log(`We're all mad here on port ${port}:${server.graphqlPath}`));
