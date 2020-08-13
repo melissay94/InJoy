@@ -32,7 +32,7 @@ type Mutation {
   deletePost(id: Int!): Boolean
   addLikeToPost(id: Int!): Boolean
   removeLikeFromPost(id: Int!): Boolean
-  createComment(postId: Int!, comment: String!, userId: Int!): Comment
+  createComment(postId: Int!, comment: String!): Comment
   editComment(id: Int!, comment: String): Comment
   deleteComment(id: Int!): Boolean
 }

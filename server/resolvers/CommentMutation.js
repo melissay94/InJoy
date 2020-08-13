@@ -39,8 +39,9 @@ async function createComment(root, { postId, comment }, { currentUser, models })
   
   }
 
-async function editComment(root, { id, title, description }, { currentUser, models }) {
-    const comment = await models.comment.findOne({
+async function editComment(root, { id, comment }, { currentUser, models }) {
+  const newComment = comment;  
+  comment = await models.comment.findOne({
         where: {
         id
         }
@@ -55,7 +56,7 @@ async function editComment(root, { id, title, description }, { currentUser, mode
     }
 
     const updatedComment = await comment.update({
-        comment: comment || post.comment
+        comment: newComment
     });
 
     if (updatedComment) {
@@ -65,7 +66,7 @@ async function editComment(root, { id, title, description }, { currentUser, mode
     }
 }
 
-async function deleteComment(root, { id }, { models }) {
+async function deleteComment(root, { id }, { currentUser, models }) {
 
     const comment = models.comment.findOne({
         where: {
@@ -77,9 +78,13 @@ async function deleteComment(root, { id }, { models }) {
         throw new Error("Issue finding comment to delete.");
     }
 
-    const commentDeleted = await comment.destroy({
+    if (comment.userId != currentUser.userId) {
+      new Error("Unable to delete comment, not posted by current user.")
+    }
+
+    const commentDeleted = await models.comment.destroy({
         where: {
-        id: comment.id
+          id
         }
     });
 
