@@ -50,6 +50,8 @@ main {
   display: flex;
   flex-direction: column;
   align-content: center;
+  min-height: 100vh;
+  background: #FAFAFA;
 }
 
 header {
@@ -92,9 +94,16 @@ nav ul {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background: #FAFAFA;
 }
 .footer li {
   margin: 4px;
+}
+
+.login-banner {
+  background: #F8F793;
+  padding: 8px;
+  padding-left: 16%;
 }
 
 form {

@@ -33,8 +33,12 @@ export default function Login ({user, setUser}) {
   }
 
   return (
-    <Slide direction="up" mountOnEnter unmountOnExit in={true}>
     <div>
+      <div className="login-banner">
+            <h1>Spark your quarantine days with joy.</h1>
+            <p>Try something new during quarantine!</p>
+      </div>
+    {/* <Slide direction="up" mountOnEnter unmountOnExit in={true}> */}
       <h2 className="fancy">Sign in</h2>
       <span className="red">{message}</span>
       <form onSubmit={handleSubmit}>
@@ -45,7 +49,7 @@ export default function Login ({user, setUser}) {
         <p>
             Not a user? <Link to='/signup'>Sign up here</Link>
         </p>
+        {/* </Slide> */}
     </div>
-    </Slide>
   )
 }
