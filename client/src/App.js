@@ -5,6 +5,7 @@ import './App.css';
 
 import Header from './wrappers/Header';
 import Content from './content/Content';
+import Footer from './wrappers/Footer';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,6 +18,7 @@ function App() {
           <main>
             <Content user={user} setUser={setUser} />
           </main>
+          <Footer />
         </div>
       </CloudinaryContext>
     </Router>
