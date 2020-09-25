@@ -19,8 +19,8 @@ export default function Content(props) {
         <div>
             <Switch>
                 <Route exact path="/" render={() => <Landing user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/login" render={() => <Login user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/signup" render={() => <Signup user={props.user} setUser={props.setUser}  /> } />
+                <Route path="/login" component={ Login } />
+                <Route path="/signup" component={ Signup } />
                 <Route path="/onboard" render={() => <Onboard user={props.user} setUser={props.setUser}  /> } />
                 <Route path="/prompts" render={() => <Prompts user={props.user} setUser={props.setUser}  /> } />
                 <Route path="/profile" render={() => <Profile user={props.user} setUser={props.setUser}  /> } />
