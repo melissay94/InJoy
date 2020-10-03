@@ -39,18 +39,27 @@ export default function Login () {
 
 
   return (
-    <div>
-    {/* <Slide direction="up" mountOnEnter unmountOnExit in={true}> */}
-      <h2 className="fancy">Sign in</h2>
-      <form onSubmit={handleSubmit}>
-            <TextField type="email" name="email" label="Email"onChange={(e) => setEmail(e.target.value)} />
-            <TextField type="password" name="password" label="Password" onChange={(e) => setPassword(e.target.value)} />
-          <Button type="submit">Sign in</Button>
-        </form>
-        <p>
-            Not a user? <Link to='/signup'>Sign up here</Link>
-        </p>
-        {/* </Slide> */}
+    <div className="login-container">
+      <div className="login-image">
+        <img src="./phone.png" alt="injoy on iPhone" />
+      </div>
+      <div>
+      {/* <Slide direction="up" mountOnEnter unmountOnExit in={true}> */}
+        <div className="well">
+          <h2 className="fancy">InJoy</h2>
+          <form onSubmit={handleSubmit}>
+                <TextField type="email" name="email" label="Email"onChange={(e) => setEmail(e.target.value)} />
+                <TextField type="password" name="password" label="Password" onChange={(e) => setPassword(e.target.value)} />
+              <Button type="submit">Sign in</Button>
+            </form>
+        </div>
+        <div className="well">
+          <p>
+              Don't have an account? <Link to='/signup'>Sign up here</Link>
+          </p>
+        </div>
+          {/* </Slide> */}
+      </div>
     </div>
   )
 }

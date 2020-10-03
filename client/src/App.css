@@ -7,6 +7,7 @@
 .fancy {
   color: rgb(1, 187, 125);
   font-family: 'Permanent Marker', cursive;
+  text-align: center;
 }
 .fancy a {
   color: rgb(1, 187, 125);
@@ -172,6 +173,26 @@ h1, h2, h3, h4, h5, h6, p {
 .menu-icon {
   height: 50px;
   display: block;
+}
+.well {
+  background: white;
+  margin: 4px;
+  padding: 8px;
+  border-radius: 4px;
+}
+.login-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.login-image img {
+  width: 260px;
+}
+.login-container2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space around;
 }
 .steps {
   color: gray;
