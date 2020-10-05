@@ -14,19 +14,19 @@ import Terms from './pages/Terms';
 import Help from './pages/Help';
 import Contact from './pages/Contact';
 
-export default function Content(props) {
+export default function Content({ isLoggedIn }) {
     return (
         <div>
             <Switch>
-                <Route exact path="/" render={() => <Landing user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/login" component={ Login } />
-                <Route path="/signup" component={ Signup } />
-                <Route path="/onboard" render={() => <Onboard user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/prompts" render={() => <Prompts user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/profile" render={() => <Profile user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/feed" render={() => <Feed user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/new/:id" render={() => <NewPost user={props.user} setUser={props.setUser}  /> } />
-                <Route path="/likes/:id" render={() => <NewPost user={props.user} setUser={props.setUser}  /> } />
+                <Route exact path="/" render={() => <Landing isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/login" render={() => <Login  isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/signup" render={() => <Signup  isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/onboard" render={() => <Onboard isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/prompts" render={() => <Prompts isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/profile" render={() => <Profile isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/feed" render={() => <Feed isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/new/:id" render={() => <NewPost isLoggedIn={ isLoggedIn } /> } />
+                <Route path="/likes/:id" render={() => <NewPost isLoggedIn={ isLoggedIn } /> } />
                 <Route path="/help" component={Help} />
                 <Route path="/terms" component={Terms} />
                 <Route path="/contact" component={Contact} />

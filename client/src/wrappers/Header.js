@@ -18,7 +18,7 @@ import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
 
 export default function Header({ isLoggedIn }) {
     // TODO add a link to feed that only shows if they posted today
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorel, setanchorel] = useState(null);
     const client = useApolloClient();
 
     const logout = () => {
@@ -84,22 +84,26 @@ export default function Header({ isLoggedIn }) {
     }
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        setanchorel(event.currentTarget);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setanchorel(null);
+    };
+
+    const handleNavigation = link => {
+        if (link.logout) {
+            logout();
+        }
     };
 
     let links = (
         <List>
             {linkInfo.map(link => {
                 return(
-                    <ListItem onClick={() => {
-                        if (link.logout) {
-                            logout()
-                        }
-                    }}>
+                    <ListItem 
+                        onClick={ () => handleNavigation }
+                        key={ `key=${link.text.toLowerCase()}` }>
                         <Link to={link.link} className="App-link header-link">
                             <span className="header-menu-icon">{link.icon}</span>
                             <span className="header-menu-icon">{link.text}</span>
@@ -112,9 +116,9 @@ export default function Header({ isLoggedIn }) {
 
     let mobileLinks = (<Drawer 
                 id="simple-menu"
-                anchorEl={anchorEl}
+                anchorel={anchorel}
                 keepMounted
-                open={Boolean(anchorEl)}
+                open={Boolean(anchorel)}
                 onClose={handleClose}
             >
                 {links}
@@ -139,5 +143,5 @@ export default function Header({ isLoggedIn }) {
             <h1 className="fancy logo"><Link className="App-link" to='/'>InJoy</Link></h1>
             <div>{/* This is an empty div for flex to center the logo */}</div>
         </header>
-    )
+    );
 }

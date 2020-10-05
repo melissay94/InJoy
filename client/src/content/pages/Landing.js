@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import Fade from '@material-ui/core/Fade';
 
 
-export default function Landing(props) {
+export default function Landing() {
     return (
-        <Fade mountOnEnter unmountOnExit in="true">
-
+        <Fade mountOnEnter unmountOnExit in={true}>
             <ul className="splash">
                 <div className="welcome">
                     <h2>Spark your quarantine days with joy</h2>

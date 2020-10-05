@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CloudinaryContext } from 'cloudinary-react';
 import './App.css';
@@ -11,12 +11,12 @@ import Content from './content/Content';
 import Footer from './wrappers/Footer';
 
 
-const GET_ISLOGGEDIN = gql`{
+const GET_IS_LOGGEDIN = gql`{
   isLoggedIn @client
 }`;
 
 function App() {
-  const { data } = useQuery(GET_ISLOGGEDIN)
+  const { data } = useQuery(GET_IS_LOGGEDIN)
 
   return (
    <Router>
