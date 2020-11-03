@@ -3,7 +3,7 @@
 
 Web Application Project for [General Assembly's](https://generalassemb.ly/) internal 24 hour 'Sparks Joy' Hackathon. Working in a team of four, our decided direction was to create a mobile-first web application that provided users with a prompt for a fun task to complete and then upload a post about, from home. 
 
-Our team is delighted to expand this project into a fully functioning, full stack web app with the following tech stack:
+Our team has been working to expand this project into a fully functioning, full stack web app with the following tech stack:
 
 - React.js
 - GraphQL
