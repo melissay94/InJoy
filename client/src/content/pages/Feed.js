@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Chip, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     post: {
@@ -10,72 +12,69 @@ const useStyles = makeStyles(theme => ({
     
 }));
 
+const GET_FEED = gql`
+    query posts {
+            id
+            title
+            user {
+            id
+            name
+            profileImage
+            }
+            image
+            description
+            comments {
+            id
+            }
+            likes {
+            id
+            }
+        }`;
+
 export default function Feed({user, setUser}) {
 
     const classes = useStyles();
 
-    const [feed, setFeed] = useState([]);
-    const [message, setMessage] = useState(null);
-    const [selectedPrompt, setSelectedPrompt] = useState(null);
-    const [promptTitles, setPromptTitles] = useState([]);
+    const { data, loading, error } = useQuery(GET_FEED);
+    
+    
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error!</div>;
 
-    useEffect(() => {
-        getFeed();
-        getPromptTitles();
-    }, []);
-
-    const getFeed = () => {
-        axios.get("http://localhost:4000/feed")
-            .then(response => {
-                console.log(response.data);
-                if (response.data.message) {
-                    setMessage(response.data.message);
-                } else {
-                    setMessage(null);
-                    setFeed(response.data);
-                }
-            }).catch(err => {
-                setMessage("Error, could not get feed");
-                console.log(err);
-            });
-    }
-
-    const getFeedByPrompt = () => {
-        if (selectedPrompt){
-            axios.get(`http://localhost:4000/prompt/${selectedPrompt}`)
-                .then(response => {
-                    if (response.data.message) {
-                        setMessage(response.data.message);
-                    } else {
-                        setMessage(null);
-                        setFeed(response.data);
-                    }
-                }).catch(err => {
-                    setMessage(`Error, could not get feed of ${selectedPrompt}`);
-                    console.log(err);
-                });
-        }
-    }
-
-    const getPromptTitles = () => {
-        axios.get("http://localhost:4000/prompt/")
-            .then(response => {
-                if (response.data.message) {
-                    setMessage(response.data.message);
-                } else {
-                    setMessage(null);
-                    setPromptTitles(response.data);
-                    console.log(response.data);
-                }
-            }).catch(err => {
-                setMessage("Error getting prompt titles");
-                console.log(err);
-            });
-    }
-
-    // if (!user) {
-    //     return <Redirect to="/" />
+    const { feed } = data;
+    // const getFeedByPrompt = () => {
+    //     if (selectedPrompt){
+    //         axios.get(`http://localhost:4000/prompt/${selectedPrompt}`)
+    //             .then(response => {
+    //                 if (response.data.message) {
+    //                     setMessage(response.data.message);
+    //                 } else {
+    //                     setMessage(null);
+    //                     setFeed(response.data);
+    //                 }
+    //             }).catch(err => {
+    //                 setMessage(`Error, could not get feed of ${selectedPrompt}`);
+    //                 console.log(err);
+    //             });
+    //     }
     // }
+
+    // const getPromptTitles = () => {
+    //     axios.get("http://localhost:4000/prompt/")
+    //         .then(response => {
+    //             if (response.data.message) {
+    //                 setMessage(response.data.message);
+    //             } else {
+    //                 setMessage(null);
+    //                 setPromptTitles(response.data);
+    //                 console.log(response.data);
+    //             }
+    //         }).catch(err => {
+    //             setMessage("Error getting prompt titles");
+    //             console.log(err);
+    //         });
+    // }
+
 
     return (
         <div>
