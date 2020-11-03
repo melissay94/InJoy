@@ -22,7 +22,8 @@ function App() {
    <Router>
      <CloudinaryContext cloudname={process.env.REACT_APP_CLOUD_NAME}>
         <div className="wrapper"> 
-          <Header isLoggedIn={ data ? data.isLoggedIn : "" } />
+          <Header isLoggedIn={ "" } />
+          {/* <Header isLoggedIn={ data ? data.isLoggedIn : "" } /> */}
           <main>
             <div className="content-container">
               <Content isLoggedIn={ data ? data.isLoggedIn : "" } />

@@ -15,7 +15,7 @@ const LOGIN_USER = gql`
   }
 `;  
 
-export default function Login () {
+export default function Login ({ isLoggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
 
@@ -35,15 +35,15 @@ export default function Login () {
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>Error!</div>
-  if (data) return <Redirect to="/" />
+  if (data) return <Redirect to="/prompts" />
 
 
   return (
     <div className="login-container">
-      <div className="login-image">
+      <div className="login-image desktop">
         <img src="./phone.png" alt="injoy on iPhone" />
       </div>
-      <div>
+      <div className="login-container2">
       {/* <Slide direction="up" mountOnEnter unmountOnExit in={true}> */}
         <div className="well">
           <h2 className="fancy">InJoy</h2>
