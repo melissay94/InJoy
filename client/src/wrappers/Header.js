@@ -22,6 +22,7 @@ export default function Header({ isLoggedIn }) {
     const client = useApolloClient();
 
     const logout = () => {
+        console.log("LOGGING OUT")
       client.clearStore();
       client.writeData({ data: { isLoggedIn: false } });
       localStorage.removeItem('token');
@@ -57,7 +58,7 @@ export default function Header({ isLoggedIn }) {
         },
         {
             text: "Sign out",
-            link: "/",
+            link: "",
             icon: <ExitToAppIcon />, 
             logout: true
         },
@@ -91,18 +92,22 @@ export default function Header({ isLoggedIn }) {
         setanchorel(null);
     };
 
-    const handleNavigation = link => {
-        if (link.logout) {
-            logout();
-        }
-    };
 
     let links = (
         <List>
             {linkInfo.map(link => {
+                if (link.logout) {
+                    return (
+                        <ListItem 
+                            onClick={ () => logout() }
+                            key={ `key=${link.text.toLowerCase()}` }>
+                                <span className="header-menu-icon">{link.icon}</span>
+                                <span className="header-menu-icon">{link.text}</span>
+                        </ListItem>
+                    )
+                }
                 return(
                     <ListItem 
-                        onClick={ () => handleNavigation }
                         key={ `key=${link.text.toLowerCase()}` }>
                         <Link to={link.link} className="App-link header-link">
                             <span className="header-menu-icon">{link.icon}</span>
@@ -135,7 +140,6 @@ export default function Header({ isLoggedIn }) {
     return (
         <header>
             <Button className="mobile" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                {/* <img className="menu-icon" alt="show menu" src="https://static.thenounproject.com/png/696519-200.png" /> */}
                 <MenuIcon />
             </Button>
             {mobileLinks}

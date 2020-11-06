@@ -12,21 +12,21 @@ export default function Prompts({user, setUser}) {
     const [prompt, setPrompt] = useState("");
     const [slide, setSlide] = useState(false);
 
-    const getData = () => {
-        axios.get(`http://www.boredapi.com/api/activity/`)
-        .then(response => {
-            console.log("DAT DATA", response.data)
-            if (response.data.type == "charity" || response.data.type=="social") {
-                getData();
-            } else {
-                setPrompt(response.data);
-                setMessage(null);
-            }
-        }).catch(err=>{
-            setMessage("Error, unable to fetch prompt");
-            console.log(err);
-        });
-    }
+    // const getData = () => {
+    //     axios.get(`http://www.boredapi.com/api/activity/`)
+    //     .then(response => {
+    //         console.log("DAT DATA", response.data)
+    //         if (response.data.type == "charity" || response.data.type=="social") {
+    //             getData();
+    //         } else {
+    //             setPrompt(response.data);
+    //             setMessage(null);
+    //         }
+    //     }).catch(err=>{
+    //         setMessage("Error, unable to fetch prompt");
+    //         console.log(err);
+    //     });
+    // }
 
     const getRandomUserPrompt = () => {
         axios.get("http://localhost:4000/prompt/random")
