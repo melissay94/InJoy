@@ -112,8 +112,7 @@ Wireframes are hosted on [Figma](https://www.figma.com/file/UNfAe2JLJ5tJBiPRrwsD
 # Current Product Images  
 <img src="./readme-img/injoyHomepage.9e630e3e.png" width="250" > <img src="./readme-img/injoySignupflow.432d0ddf.png" width="250" >  
 
-<img src="./readme-img/injoy-prompts.gif" width="250"> 
-<img src="./readme-img/injoyFeed.2d2911bc.png" width="250" >
+<img src="./readme-img/injoy-prompts.gif" width="250"> <img src="./readme-img/injoyFeed.2d2911bc.png" width="250" >
 
 
 # Future Goals
