@@ -28,7 +28,7 @@ We worked in a team of four made up of two User Experience Designers and two Dev
 
 ## Schema
 
-![erd diagram](./erd.png)
+![erd diagram](./readme-img/erd.png)
 
 ## GraphQL Queries and Mutations
 
