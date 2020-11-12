@@ -9,6 +9,7 @@ type Query {
   post(id: Int!): Post
   prompt(id: Int!): Prompt
   prompts: [Prompt!]!
+  randomPrompt: Prompt
   category(id: Int!): Category
   categories: [Category!]!
 }

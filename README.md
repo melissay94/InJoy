@@ -1,4 +1,4 @@
-![](./homepage.png)
+![](./readme-img/homepage.png)
 # InJoy
 
 Web Application Project for [General Assembly's](https://generalassemb.ly/) internal 24 hour 'Sparks Joy' Hackathon. Working in a team of four, our decided direction was to create a mobile-first web application that provided users with a prompt for a fun task to complete and then upload a post about, from home. 
@@ -33,7 +33,23 @@ We worked in a team of four made up of two User Experience Designers and two Dev
 ## GraphQL Queries and Mutations
 
 
-|Function Name|Expected Behavior|
+### Queries 
+
+|Function Name| Behavior|
+|------|-----|
+|`currentUser`| Returns current user|
+|`user(id: Int!)`|Returns a single user|
+|`post(id: Int!)`| Returns a single post|
+|`posts`| Returns all posts|
+|`prompt(id: Int!)`| Returns a single prompt|
+|`prompts`| Returns all prompts|
+|`randomPrompt`| Returns a random prompt|
+|`category(id: Int!)`| Returns a single category|
+|`categories`| Returns all categories|
+
+### Mutations
+
+|Function Name| Behavior|
 |------|-----|
 |`signup`|Creates an entry in the user table and gives back a valid session token|
 |`login`|Locates and validates an existing user and gives back a valid session token|
@@ -59,7 +75,7 @@ We worked in a team of four made up of two User Experience Designers and two Dev
 
 ## Site Map
 
-![](./sitemap.png)
+![Site map](./readme-img/sitemap.png)
 
 ## Wireframes
 
@@ -94,9 +110,10 @@ Wireframes are hosted on [Figma](https://www.figma.com/file/UNfAe2JLJ5tJBiPRrwsD
 4. Implemented auth on React front end so users can register and login through the user interface.
 
 # Current Product Images  
-<img src="./injoyHomepage.9e630e3e.png" width="250" > <img src="./injoySignupflow.432d0ddf.png" width="250" >  
+<img src="./readme-img/injoyHomepage.9e630e3e.png" width="250" > <img src="./readme-img/injoySignupflow.432d0ddf.png" width="250" >  
 
-<img src="./injoy-prompts.gif" width="250"> <img src="./injoyFeed.2d2911bc.png" width="250" >
+<img src="./readme-img/injoy-prompts.gif" width="250"> 
+<img src="./readme-img/injoyFeed.2d2911bc.png" width="250" >
 
 
 # Future Goals

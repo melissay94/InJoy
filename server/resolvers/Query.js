@@ -1,3 +1,5 @@
+const db = require('../models');
+
 async function currentUser(root, args, { currentUser, models }) {
 
   // We have to do the Sequelize logic
@@ -70,6 +72,16 @@ async function prompts(root, args, { models }) {
   return prompts ? prompts : [];
 }
 
+async function randomPrompt(root, args, { models }) {
+  const randomPrompt = await models.prompt.findAll({ order: db.Sequelize.literal('random()'), limit: 1 });
+
+  if (randomPrompt) {
+    return randomPrompt[0];
+  } else {
+    throw new Error("Could not get random prompt");
+  }
+}
+
 // async function comment(root, { id }, { models }) {
 //   const comment = await models.comment.findOne({
 //     where: {
@@ -117,6 +129,7 @@ module.exports = {
   post,
   prompt,
   prompts,
+  randomPrompt,
   category,
   categories
 }
