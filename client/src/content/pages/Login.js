@@ -17,14 +17,24 @@ const LOGIN_USER = gql`
 
 export default function Login ({ isLoggedIn }) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); 
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(null);
 
   const client = useApolloClient();
 
-  const [login, { data, loading, error }] = useMutation(LOGIN_USER, {
+  const [login, { data, loading }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       localStorage.setItem('token', login.token);
       client.writeData({ data: { isLoggedIn: true }})
+    },
+    onError({ graphQLErrors, networkError }) {
+      if (graphQLErrors.length > 0) {
+        setMessage(graphQLErrors[0].message);
+      } else if(networkError) {
+        setMessage(networkError.message || "Network Error");
+      } else {
+        setMessage("There was an error creating a user");
+      }
     }
   });
 
@@ -34,7 +44,7 @@ export default function Login ({ isLoggedIn }) {
   }
 
   if (loading) return <div>Loading...</div>
-  if (error) return <div>Error!</div>
+  if (message) return <div>{message}</div>
   if (data) return <Redirect to="/prompts" />
 
 

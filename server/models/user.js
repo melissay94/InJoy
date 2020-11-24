@@ -42,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
         msg: "Missing neccessary password characters. Please include at least one lowercase letter, one uppercase letter, one number, and one special character."
       }
     },
-    profileImage: DataTypes.STRING
+    profileImage: DataTypes.STRING,
+    currentPromptId: DataTypes.INTEGER,
   }, {
     hooks: {
       beforeCreate: (createdUser, options) => {
@@ -61,6 +62,8 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   user.associate = function(models) {
+    // User can have one current prompt
+    user.belongsTo(models.prompt);
     // Users can follow other users
     user.belongsToMany(models.user, { as: 'followed', through: "followings" });
     // Users can like many posts
@@ -72,7 +75,9 @@ module.exports = (sequelize, DataTypes) => {
     // A user can create multiple posts
     user.hasMany(models.post);
     // A user can create multiple prompts
-    user.hasMany(models.prompt);
+    user.hasMany(models.prompt, {
+      foreignKey: 'authorId',
+    });
   };
 
   user.prototype.validPassword = function(passwordTyped) {

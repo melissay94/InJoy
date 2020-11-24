@@ -24,7 +24,7 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER
       },
-      userId: {
+      authorId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

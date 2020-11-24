@@ -46,12 +46,13 @@ type User {
   password: String!
   name: String
   profileImage: String
+  currentPrompt: Prompt,
   comments: [Comment!]!
   following: [User!]!
   categories: [Category!]!
   posts: [Post!]!
   postsLiked: [Post!]!
-  prompts: [Prompt!]!
+  prompts: [Prompt!]! # These are prompts created by user
 }
 
 # Authpayload
@@ -79,7 +80,8 @@ type Prompt {
   tips: String
   category: Category!
   posts: [Post!]!
-  user: User!
+  author: User!,
+  users: [User!]!,
 }
 
 type Comment {
@@ -96,7 +98,6 @@ type Category {
   posts: [Post!]!
   users: [User!]!
 }
-
 `;
 
 module.exports = typeDefs;
