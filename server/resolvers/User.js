@@ -36,6 +36,12 @@ async function postsLiked(user) {
   }
 }
 
+async function currentPrompt(user) {
+  const currentPrompt = await user.getCurrentPrompt();
+
+  return currentPrompt ? currentPrompt : null;
+}
+
 async function prompts(user) {
   const prompts = await user.getPrompts();
 

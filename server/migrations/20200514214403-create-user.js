@@ -30,6 +30,9 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      currentPromptId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
