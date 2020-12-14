@@ -46,13 +46,12 @@ type User {
   password: String!
   name: String
   profileImage: String
-  currentPrompt: Prompt,
   comments: [Comment!]!
   following: [User!]!
   categories: [Category!]!
   posts: [Post!]!
   postsLiked: [Post!]!
-  prompts: [Prompt!]! # These are prompts created by user
+  prompts: [Prompt!]!
 }
 
 # Authpayload
@@ -80,8 +79,7 @@ type Prompt {
   tips: String
   category: Category!
   posts: [Post!]!
-  author: User!,
-  users: [User!]!,
+  user: User!
 }
 
 type Comment {
