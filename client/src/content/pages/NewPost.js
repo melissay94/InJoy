@@ -1,17 +1,27 @@
 // Packages
 import React, { useState } from 'react'
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
+import useRedirect from '../../hooks/useRedirect';
 import usePost from '../../hooks/usePost';
+import useCurrentUser from '../../hooks/query/useCurrentUser';
 import { openUploadWidget } from '../../utils/CloudinarySetup';
 
-export default function NewPost({user, setUser}){
+export default function NewPost({ isLoggedIn }){
+  // Declare and initialize state variables
   const [newPost, setNewPost] = useState(null);
   const [image, setImage] = useState(null);
   const [link, setLink] = useState('');
+  let [message, setMessage] = useState(null);
+  const { id } = useParams();
+
+  const shouldRedirect = isLoggedIn ? false : true;
+  useRedirect(shouldRedirect, isLoggedIn, useHistory());
+
+  const { data: user, loading, error } = useCurrentUser();
 
   const handleUpload = () => {
     const options = {
@@ -34,6 +44,7 @@ export default function NewPost({user, setUser}){
     })
   }
 
+  // Need to change from axios to a mutation hook
   const sendPost = () => {
     handleUpload();
     axios.post(`http://localhost:4000/user/${user.id}/post`, {
@@ -47,7 +58,7 @@ export default function NewPost({user, setUser}){
         setMessage(response.data.message);
       } else {
         setMessage(null);
-        setUser(response.data);
+        // setUser(response.data);
         setNewPost(response.data.posts[response.data.posts.length -1]);
       }
     }).catch(err => {
@@ -55,21 +66,30 @@ export default function NewPost({user, setUser}){
       console.log(err);
     });
   }
-
-  // Declare and initialize state variables
-  const { id } = useParams();
+  
   const { handleInputChange, handleSubmit, inputs } = usePost(sendPost);
-  let [message, setMessage] = useState(null);
-
-  if (!user) {
-    return <Redirect to="/" />;
-  }
 
   if (newPost) {
     return <div>
       Congrats! You posted!
       <a href="/feed">Go check out the feed!</a>
     </div>;
+  }
+
+  if (loading) {
+    return (
+      <div>
+        loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        error.message
+      </div>
+    );
   }
 
   return (

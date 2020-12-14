@@ -12,7 +12,9 @@ const CURRENT_USER = gql`
   }
 `;
 
-export default useCurrentUser = () => {
+const useCurrentUser = () => {
   const { data, loading, error } = useQuery(CURRENT_USER);
   return { data, loading, error };
-}
+};
+
+export default useCurrentUser;

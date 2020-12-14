@@ -27,7 +27,6 @@ export default function Prompts({user, setUser}) {
 
     const getRandomUserPrompt = () => {
         const { data } = useRandomPrompt;
-        console.log(data);
         data ? setPrompt(data) : getData();
     }
 
@@ -76,9 +75,9 @@ export default function Prompts({user, setUser}) {
                 </h2>
                 <h3>Does this activity spark joy?</h3>
                 <div className="prompt-buttons">
-                    <div className="button-div green" onClick={() => sendPrompt()}>
+                    {/* <div className="button-div green" onClick={() => sendPrompt()}>
                         <Link className="App-link" to={`/new/${prompt.activity}`}>Yes</Link>
-                    </div>
+                    </div> */}
                     <div className="button-div green" onClick={()=> {
                         setSlide(false);
                         getPrompt();
