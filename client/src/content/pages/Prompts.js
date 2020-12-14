@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Slide from '@material-ui/core/Slide';
+import useRedirect from '../../hooks/useRedirect';
 import useRandomPrompt from '../../hooks/query/useRandomPrompt';
 
-export default function Prompts({user, setUser}) {
-    const [prompt, setPrompt] = useState("");
+export default function Prompts({ isLoggedIn }) {
+    const [prompt, setPrompt] = useState('');
     const [slide, setSlide] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const shouldRedirect = isLoggedIn ? false : true;
+    useRedirect(shouldRedirect, isLoggedIn, useHistory());
 
     const getData = () => {
         axios.get(`http://www.boredapi.com/api/activity/`)
@@ -16,6 +21,7 @@ export default function Prompts({user, setUser}) {
                 || response.data.type === "social") {
                 getData();
             } else {
+                console.log('Bored', response.data);
                 setPrompt(response.data);
                 setMessage(null);
             }
@@ -27,6 +33,7 @@ export default function Prompts({user, setUser}) {
 
     const getRandomUserPrompt = () => {
         const { data } = useRandomPrompt;
+        console.log('Random', data);
         data ? setPrompt(data) : getData();
     }
 
@@ -41,6 +48,10 @@ export default function Prompts({user, setUser}) {
             setSlide(true);
         }, 500);
     }
+
+    useEffect(() => {
+        getPrompt();
+    }, [])
 
     // Commenting this out because we can't use axios to make calls to our own db
     // Because of GraphQL it's not set up to use get/post requests.
@@ -60,12 +71,6 @@ export default function Prompts({user, setUser}) {
     //             console.log(err);
     //         });
     // }
-
-    const [message, setMessage] = useState('');
-
-    if (!user) {
-        return <Redirect to='/login' />
-    }
   
     return (
         <Slide direction="left" mountOnEnter unmountOnExit in={slide}>
