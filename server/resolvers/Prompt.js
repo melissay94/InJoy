@@ -13,14 +13,14 @@ async function category(prompt) {
     return category ? category : null;
 }
 
-async function author(prompt){
-  const author = await prompt.getAuthor();
+async function user(prompt){
+  const user = await prompt.getuser();
 
-  return author ? author : null;
+  return user ? user : null;
 }
 
 module.exports = {
     posts,
     category,
-    author,
+    user,
 };
