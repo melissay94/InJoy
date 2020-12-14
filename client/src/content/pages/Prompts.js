@@ -12,16 +12,16 @@ export default function Prompts({ isLoggedIn }) {
 
     const shouldRedirect = isLoggedIn ? false : true;
     useRedirect(shouldRedirect, isLoggedIn, useHistory());
+    
+    const { data } = useRandomPrompt();
 
     const getData = () => {
         axios.get(`http://www.boredapi.com/api/activity/`)
         .then(response => {
-            console.log("DAT DATA", response.data);
             if (response.data.type === "charity" 
                 || response.data.type === "social") {
                 getData();
             } else {
-                console.log('Bored', response.data);
                 setPrompt(response.data);
                 setMessage(null);
             }
@@ -31,18 +31,12 @@ export default function Prompts({ isLoggedIn }) {
         });
     }
 
-    const getRandomUserPrompt = () => {
-        const { data } = useRandomPrompt;
-        console.log('Random', data);
-        data ? setPrompt(data) : getData();
-    }
-
     const getPrompt = () => {
         const randomChance = Math.random();
         if (randomChance < 0.5) {
             getData();
         } else {
-            getRandomUserPrompt();
+            data ? setPrompt(data.randomPrompt) : getData();
         }
         setTimeout(() => {
             setSlide(true);
@@ -71,12 +65,14 @@ export default function Prompts({ isLoggedIn }) {
     //             console.log(err);
     //         });
     // }
+
+    console.log(prompt);
   
     return (
         <Slide direction="left" mountOnEnter unmountOnExit in={slide}>
             <div className="prompt slide">
                 <h2>
-                    {prompt.activity}
+                    {prompt.activity || prompt.title}
                 </h2>
                 <h3>Does this activity spark joy?</h3>
                 <div className="prompt-buttons">
