@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Slide from '@material-ui/core/Slide';
+import useRedirect from '../../hooks/useRedirect';
 import useRandomPrompt from '../../hooks/query/useRandomPrompt';
 
-export default function Prompts({user, setUser}) {
-    const [prompt, setPrompt] = useState("");
+export default function Prompts({ isLoggedIn }) {
+    const [prompt, setPrompt] = useState('');
     const [slide, setSlide] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const shouldRedirect = isLoggedIn ? false : true;
+    useRedirect(shouldRedirect, isLoggedIn, useHistory());
+    
+    const { data } = useRandomPrompt();
 
     const getData = () => {
         axios.get(`http://www.boredapi.com/api/activity/`)
         .then(response => {
-            console.log("DAT DATA", response.data);
             if (response.data.type === "charity" 
                 || response.data.type === "social") {
                 getData();
@@ -25,23 +31,21 @@ export default function Prompts({user, setUser}) {
         });
     }
 
-    const getRandomUserPrompt = () => {
-        const { data } = useRandomPrompt;
-        console.log(data);
-        data ? setPrompt(data) : getData();
-    }
-
     const getPrompt = () => {
         const randomChance = Math.random();
         if (randomChance < 0.5) {
             getData();
         } else {
-            getRandomUserPrompt();
+            data ? setPrompt(data.randomPrompt) : getData();
         }
         setTimeout(() => {
             setSlide(true);
         }, 500);
     }
+
+    useEffect(() => {
+        getPrompt();
+    }, [])
 
     // Commenting this out because we can't use axios to make calls to our own db
     // Because of GraphQL it's not set up to use get/post requests.
@@ -62,23 +66,19 @@ export default function Prompts({user, setUser}) {
     //         });
     // }
 
-    const [message, setMessage] = useState('');
-
-    if (!user) {
-        return <Redirect to='/login' />
-    }
+    console.log(prompt);
   
     return (
         <Slide direction="left" mountOnEnter unmountOnExit in={slide}>
             <div className="prompt slide">
                 <h2>
-                    {prompt.activity}
+                    {prompt.activity || prompt.title}
                 </h2>
                 <h3>Does this activity spark joy?</h3>
                 <div className="prompt-buttons">
-                    <div className="button-div green" onClick={() => sendPrompt()}>
+                    {/* <div className="button-div green" onClick={() => sendPrompt()}>
                         <Link className="App-link" to={`/new/${prompt.activity}`}>Yes</Link>
-                    </div>
+                    </div> */}
                     <div className="button-div green" onClick={()=> {
                         setSlide(false);
                         getPrompt();
